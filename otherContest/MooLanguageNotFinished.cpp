@@ -3,22 +3,50 @@ using namespace std;
 using ll = long long;
 #define rep(i,n) for(ll i = 0; i < (n); ++i)
 using P = pair<ll,ll>;
+bool longSentence2Left = true;
+ll nounUsed = 0;
+ll transitiveUsed = 0;
+ll intransitiveUsed = 0;
+ll conjuctionUsed = 0;
+string noun[10000];
+string transitive[10000];
+string intransitive[10000];
+string conjunctions[10000];
+ll longestSentenceTwoSize;
+void printSentenceA(){
+    cout << noun[nounUsed] << " " << intransitive[intransitiveUsed];
+    nounUsed++;
+    intransitiveUsed++;
+    return;
+}
+void printSentenceB(){
+    cout << noun[nounUsed] << " " << transitive[transitiveUsed] << " " << noun[nounUsed];
+    nounUsed+=2;
+    transitiveUsed++;
+    if(longSentence2Left){
+        rep(i,longestSentenceTwoSize){
+            cout << ", " << noun[nounUsed];
+            nounUsed++;
+        }
+    }
+    return;
+}
 int main(){
     ll T;
     cin >> T;
     rep(i,T){
+                
+        nounUsed = 0;
+        transitiveUsed = 0;
+        intransitiveUsed = 0;
+        conjuctionUsed = 0;
+        //get the imput
         ll N,C,Pi;
         cin >> N >> C >> Pi;
-        string noun[N];
-        string transitive[N];
-        string intransitive[N];
-        string conjunction[N];
         ll nounCount = 0;
         ll transitiveCount = 0;
         ll intransitiveCount = 0;
         ll conjunctionCount = 0;
-
-        //get the imput
         rep(i,N){
             string cash;
             string cash2;
@@ -36,80 +64,91 @@ int main(){
                 intransitiveCount++;
             }
             if(cash2 == "conjunction"){
-                conjunction[conjunctionCount] = cash;
+                conjunctions[conjunctionCount] = cash;
                 conjunctionCount++;
             }
         }
-        cout << "NounCount " << nounCount << "tranisitive-verg" << transitiveCount << "intransndiaverb" << intransitiveCount << "conjuctino" << conjunctionCount << endl;
-        ll SentenceOne;
-        ll SentenceTwo;
-        
-        // how many sentence 2 can we make this this value?
-        SentenceTwo = min(C,transitiveCount);
-        SentenceTwo = min(SentenceTwo,nounCount/2);
-        nounCount -= SentenceTwo*2;
-        C -= SentenceTwo;
-        transitiveCount -= SentenceTwo;
 
-        
-        // how many sentence 1 can we make this this value?
-        SentenceOne = min(intransitiveCount,nounCount);
-        nounCount -= SentenceOne;
-        intransitiveCount -= SentenceOne;
+        //Get the number of Type1 and Type2
+        ll sentenceSize = 0;
+        ll SentenceOne = 0;
+        ll SentenceTwo = 0;
+        ll maxSize = 0;
+        ll ConjuctionUse = min(conjunctionCount,C);
+        ll maxSentenceCount = Pi + ConjuctionUse;
+        ll conjuctionF = 0;
 
-        //Consider the conjuction and join as many sentence as possible
-        ll SentenceTwoJoin = 0;
-        ll sentenceOneTwoJoin = 0;
-        ll sentenceOneJoin = 0;
-        SentenceTwoJoin = min(SentenceTwo/2,conjunctionCount);
-        conjunctionCount - SentenceTwoJoin;
-        SentenceTwo -= SentenceTwoJoin*2;
-        if(conjunctionCount != 0){
-            if(SentenceTwo >= 1 && SentenceOne >= 1){
-                sentenceOneTwoJoin = 1;
-                SentenceOne -=1;
-                SentenceTwo -=1;
+        rep(i,intransitiveCount){
+            rep(j,transitiveCount){
+                if(i+j <= maxSentenceCount && i+j*2 <= nounCount) {
+                    ll cashC = C;
+                    ll wordCount = i*2+j*3;
+                    ll conjuctionCanUse = min(conjunctionCount,(i+j)/2);
+                    wordCount += conjuctionCanUse;
+                    cashC -= conjuctionCanUse;
+                    int ccount = 0;
+                    if(j >= 1) {
+                        ccount = min(cashC,nounCount-i-j*2);
+                        wordCount += ccount;
+                    }
+                    if(wordCount > maxSize) {
+                        maxSize = wordCount;
+                        SentenceOne = i;
+                        SentenceTwo = j;
+                        longestSentenceTwoSize = ccount;
+                        conjuctionF = conjuctionCanUse;
+                    }
+                }
             }
-            sentenceOneJoin = min(conjunctionCount, SentenceOne/2);
-            SentenceOne -= sentenceOneJoin*2;
-            conjunctionCount -= sentenceOneJoin;
         }
 
-        //Consider the period limitation
-        ll sentenceTwoJoinFinal = 0;
-        ll sentenceOneTwoJoinFinal = 0;
-        ll sentenceOneJoinFinal = 0;
-        ll sentenceTwoFinal = 0;
-        ll sentenceOneFinal = 0;
-        sentenceTwoJoinFinal = min(SentenceTwoJoin,Pi);
-        SentenceTwoJoin -= sentenceTwoJoinFinal;
-        Pi -= sentenceTwoJoinFinal;
-        sentenceOneTwoJoinFinal = min(sentenceOneTwoJoin,Pi);
-        sentenceOneTwoJoin -= sentenceOneTwoJoinFinal;
-        Pi -= sentenceOneTwoJoinFinal;
-        sentenceOneJoinFinal = min(sentenceOneJoin,Pi);
-        sentenceOneJoin -= sentenceOneJoinFinal;
-        Pi -= sentenceOneJoinFinal;
-        sentenceOneFinal = min(SentenceOne,Pi);
-        SentenceOne -= sentenceOneFinal;
-        Pi -= sentenceOneFinal;
-        sentenceTwoFinal = min(SentenceTwo,Pi);
-        SentenceTwo -= sentenceTwoFinal;
-        Pi -= sentenceTwoFinal;
-        cout << sentenceTwoJoinFinal * 7 + sentenceOneTwoJoinFinal * 6 + sentenceOneJoinFinal * 5 + sentenceTwoFinal * 3 + sentenceOneFinal * 2 << endl;
+        cout << maxSize << endl;
         
         //print one of the sentence
-        ll nounUsed = 0;
-        ll transitiveUsed = 0;
-        ll intransitiveUsed = 0;
-        ll conjuctionUsed = 0;
-        rep(i,sentenceOneFinal){
-            cout << noun[nounUsed] << " " << intransitive[intransitiveUsed] << ". ";
-            nounUsed++;
-            intransitiveUsed++;
+        ll sentenceOneSentenceOne = 0;
+        ll sentenceOneSentenceTwo = 0;
+        ll sentenceTwoSentenceTwo = 0;
+        if(SentenceOne/2 > conjuctionF){
+            conjuctionF = 0;
+            SentenceOne -= conjuctionF*2;
+        }else{
+            conjuctionF - SentenceOne/2;
+            SentenceOne%=2;
         }
-        rep(i,sentenceTwoFinal){
-            cout << noun[nounUsed] << " " << transitive[transitiveUsed] << "" << endl;
+        if(SentenceOne==1&&SentenceTwo!=0&&conjuctionF!=0){
+            sentenceOneSentenceTwo =1;
+            SentenceOne-=1;
+            SentenceTwo-=1;
+            conjuctionF-=1;
+        }
+        sentenceTwoSentenceTwo=conjuctionF;
+        rep(i,SentenceOne){
+            printSentenceA();
+            cout << ". ";
+        }
+        rep(i,SentenceTwo){
+            printSentenceB();
+            cout << ". ";
+        }
+        rep(i,sentenceOneSentenceOne){
+            printSentenceA();
+            cout << " " << conjunctions[conjuctionUsed] << " ";
+            printSentenceA();
+            conjuctionUsed++;
+            cout << ". ";
+        }
+        rep(i,sentenceOneSentenceTwo){
+            printSentenceA();
+            cout << " " << conjunctions[conjuctionUsed] << " ";
+            printSentenceB();
+            cout << ". ";
+            conjuctionUsed++;
+        }
+        rep(i,sentenceTwoSentenceTwo){
+            printSentenceB();
+            cout << " " << conjunctions[conjuctionUsed] << " ";
+            printSentenceB();
+            conjuctionUsed++;
         }
     }
 }
