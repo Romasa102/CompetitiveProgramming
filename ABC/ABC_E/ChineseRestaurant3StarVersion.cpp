@@ -1,9 +1,33 @@
-#include <bits/stdc++.h>
+#include <cassert>
+#include <cctype>
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <bitset>
+#include <deque>
+#include <functional>
+#include <iostream>
+#include <iomanip>
+#include <limits>
+#include <list>
+#include <map>
+#include <numeric>
+#include <queue>
+#include <set>
+#include <sstream>
+#include <stack>
+#include <string>
+#include <tuple>
+#include <utility>
+#include <vector>
 using namespace std;
 using ll = long long;
 #define rep(i,n) for(ll i = 0; i < (n); ++i)
 using P = pair<ll,ll>;
 int main(){
+
+    //define variables
     ll N;
     cin >> N;
     ll p[N];
@@ -16,9 +40,13 @@ int main(){
     vector<ll> positiveEnd(N+20);
     vector<ll> negativeStart(N+20);
     vector<ll> positiveStart(N+20);
+
+    //use loop to get input
     rep(i,N){
         cin >> p[i];
     }
+
+    //use loop to get the distance for each person
     rep(i,N){
         if(i-p[i] >= 0){
             dis[p[i]] = i-p[i];
@@ -26,6 +54,8 @@ int main(){
             dis[p[i]] = i-p[i]+N;
         }
     }
+
+    
     rep(i,N){
         numNow+=min(dis[p[i]], N - dis[p[i]]);
         if(N%2==0){
