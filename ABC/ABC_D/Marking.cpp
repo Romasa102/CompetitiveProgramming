@@ -10,7 +10,7 @@ int main(){
         ll N,D,K;
         cin >> N >> D >> K;
         --K;
-        int a = N / gcd(N, D);
+        int a = N / __gcd(N, D);
         cout << D * K % N + K / a << '\n';
     }
 }
