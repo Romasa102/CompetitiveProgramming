@@ -6,7 +6,9 @@ using P = pair<ll,ll>;
 int main(){
     ll N;
     cin >> N;
-    ll dp[N+10];
-    dp[N] = 1;
-    
+    double a[N];
+    rep(i,N){
+        cin >> a[i];
+    }
+
 }

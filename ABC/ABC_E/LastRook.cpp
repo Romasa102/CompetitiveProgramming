@@ -31,41 +31,39 @@ int main(){
     ll N;
     cin >> N;
     ll A,B;
-    A = 0;
-    B = (N+1)/2;
+    A = 1;
+    B = N+1;
+    ll M;
     ll num;
-    ll S = (N+1)/2;
-    while(true){
-        cout << "? "<< A << " " << B << " " << 1 << " " << N << endl;
+    ll S = (N)/2 - 1;
+    while(A+1 != B){
+        M = (A+B)/2;
+        cout << "? "<< A << " " << M-1 << " " << 1 << " " << N << endl;
         cin >> num;
+        
+        S = M - A;
         if(S - num == 0){
-            A = B+1;
-            B += S/2;
-            S = B - A + 1;
+            A = M;
         }else{
-            B -= S/2;
-            S = B - A + 1;
-        }
-        if(A == B){
-            break;
+            B = M;
         }
     }
     ll C,D;
-    S = (N+1)/2;
-    while(true){
-        cout << "? "<< A << " " << B << " " << C << " " << D << endl;
+    C = 1;
+    D = N+1;
+    S = (N)/2 - 1;
+    while(C +1 != D){
+        M = (C+D)/2;
+        S = M - C;
+        cout << "? "<< 1 << " " << N << " " << C << " " << M-1 << endl;
+
         cin >> num;
-        if(num == 0){
-            C = D+1;
-            D += S/2;
-            S = D - C + 1;
+        
+        if(S - num == 0){
+            C = M;
         }else{
-            D -= S/2;
-            S = D - C + 1;
-        }
-        if(C == D){
-            break;
+            D = M;
         }
     }
-    cout << "! " << A << " " << D << endl;
+    cout << "! " << A << " " << C << endl;
 }
