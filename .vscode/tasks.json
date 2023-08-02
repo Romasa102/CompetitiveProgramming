@@ -1,0 +1,27 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "compile",
+            "type": "shell",
+            "command": "C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/g++.exe",
+            "args": [
+                "-std=gnu++17",
+                "-Wall",
+                "-Wextra",
+                "-O2",
+                "-DONLINE_JUDGE",
+                "-I/opt/boost/gcc/include",
+                "-L/opt/boost/gcc/lib",
+                "-I${workspaceFolder}/ac-library",
+                "-o",
+                "${workspaceFolder}/a.out",
+                "${file}"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
