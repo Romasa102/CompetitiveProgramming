@@ -8,23 +8,29 @@ int main(){
     cin >> N >> M;
     ll k;
     ll p[M];
-    vector<vector<ll>> Swi(M);
+    ll Switches[M];
     rep(i,M){
         cin >> k;
+        Switches[i] = 0;
         rep(j,k){
             ll o;
             cin >> o;
-            Swi[i].push_back(o); 
+            Switches[i] += 1<<(o-1);
         }
     }
     rep(i,M){
         cin >> p[i];
     }
+    ll ans = 0;
     for(int bit = 0;bit < 1<<N; bit++){
-        for(int i = 0; i < N; i++){
-            if(bit & 1<<i){
-                
+        bool allL = true;
+        for(int i = 0; i < M; i++){
+            if(__builtin_popcount(Switches[i] & bit)%2 != p[i]){
+                allL = false;
+                break;
             }
         }
+        if(allL)ans++;
     }
+    cout << ans << endl;
 }
