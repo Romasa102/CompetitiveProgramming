@@ -25,5 +25,5 @@ int main(){
         time++;
         sum += len;
     }while(next_permutation(num.begin(),num.end()));
-    cout << fixed << setprecision(8) << sum << endl;
+    cout << fixed << setprecision(8) << sum/time << endl;
 }
