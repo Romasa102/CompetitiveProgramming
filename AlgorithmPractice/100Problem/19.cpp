@@ -1,26 +1,9 @@
-#include <cassert>
-#include <cctype>
-#include <cmath>
-#include <cstdio>
 #include <cstdlib>
 #include <algorithm>
-#include <bitset>
-#include <deque>
-#include <functional>
 #include <iostream>
-#include <iomanip>
-#include <limits>
-#include <list>
-#include <map>
 #include <numeric>
-#include <queue>
-#include <set>
 #include <sstream>
-#include <stack>
-#include <string>
-#include <tuple>
 #include <utility>
-#include <vector>
 using namespace std;
 #define repp(i, c, n) for (ll i = c; i < (n); ++i)
 using ll = long long;
@@ -33,13 +16,23 @@ int main(){
     cin >> n;
     ll m;
     cin >> m;
-    ll sub[n-1];
+    ll sub[n+1];
     ll k[m];
-    rep(i,n){
-        cin >> sub[i]
+    sub[0] = 0;
+    sub[n] = d;
+    rep(i,n-1){
+        cin >> sub[i+1];
     }
     rep(i,m){
         cin >> k[i];
     }
-    
+    ll F,S;
+    ll ans = 0;
+    sort(sub,sub + n + 1);
+    rep(i,m){
+        F = *lower_bound(sub,sub+n+1,k[i]);
+        S = *(lower_bound(sub,sub+n+1,k[i])-1);
+        ans += min(abs(F-k[i]),abs(S-k[i]));
+    }
+    cout << ans << endl;
 }
