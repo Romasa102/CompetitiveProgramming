@@ -7,3 +7,4 @@ add_executable(CompetitiveProgramming main.cpp)
 
 add_executable(20 AlgorithmPractice/100Problem/20.cpp)
 add_executable(23 AlgorithmPractice/100Problem/23.cpp)
+add_executable(27 AlgorithmPractice/100Problem/27.cpp)
