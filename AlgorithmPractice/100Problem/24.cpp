@@ -6,13 +6,18 @@ using P = pair<ll,ll>;
 map<ll,vector<ll>> m;
 vector<ll> d(1000);
 vector<ll> f(1000);
-int dfs(ll o,ll currentC){
+ll currentC = 0;
+bool visited[1000];
+void dfs(ll o){
+    if(visited[o])return;
+    visited[o] = true;
+    currentC++;
     d[o] = currentC;
     for(auto i : m[o]){
-        f[o] = dfs(i,currentC+1);
-        return f[o] + 1;
+        dfs(i);
     }
-    return currentC  +1;
+    currentC++;
+    f[o] = currentC;
 }
 int main(){
     ll n;
@@ -27,8 +32,10 @@ int main(){
         }
     }
     d[0] = 0;
-    f[0] = dfs(0,1);
     rep(i,n){
-        cout << i << " " << d[i] << " " << f[i] << endl;
+        dfs(i+1);
+    }
+    rep(i,n){
+        cout << i+1 << " " << d[i+1] << " " << f[i+1] << endl;
     }
 }
