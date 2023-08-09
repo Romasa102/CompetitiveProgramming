@@ -5,6 +5,7 @@ using ll = long long;
 using P = pair<ll,ll>;
 int main(){
     ll N;
+
     ll M;
     cin >> N >> M;
     ll P[N+1];
