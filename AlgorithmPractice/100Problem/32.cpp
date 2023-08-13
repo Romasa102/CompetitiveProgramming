@@ -30,23 +30,26 @@ int main(){
         ll dis[w][h];
         rep(i,h){
             rep(j,w){
-                dis[i][j] = -1;
+                dis[j][i] = -1;
             }
         }
-        dis[0][0] = 0;
+        dis[0][0] = 1;
         while(Q.size()){
             ll x = Q.front().first;
             ll y = Q.front().second;
-            if(x+1 < w-1 && wall[x+1][y] == 0 && dis[(x+2)/2][y/2] == -1){
+            if(x+1 < 2 * w - 1 && wall[x+1][y] == 0 && dis[(x+2)/2][y/2] == -1){
                 dis[(x+2)/2][y/2] = dis[x/2][y/2] + 1;
                 Q.push({x+2,y});
-            }else if(y+1 < h-1 && wall[x][y+1] == 0 && dis[x/2][(y+2)/2] == -1){
+            }
+            if(y+1 < 2 * h - 1 && wall[x][y+1] == 0 && dis[x/2][(y+2)/2] == -1){
                 dis[x/2][(y+2)/2] = dis[x/2][y/2] + 1;
                 Q.push({x,y+2});
-            }else if(x-1 > 0 && wall[x-1][y] == 0 && dis[(x-2)/2][y/2] == -1){
+            }
+            if(x-1 > 0 && wall[x-1][y] == 0 && dis[(x-2)/2][y/2] == -1){
                 dis[(x-2)/2][y/2] = dis[x/2][y/2] + 1;
                 Q.push({x-2,y});
-            }else if(y-1>0 && wall[x][y-1] == 0 && dis[x/2][(y-2)/2] == -1){
+            }
+            if(y-1>0 && wall[x][y-1] == 0 && dis[x/2][(y-2)/2] == -1){
                 dis[x/2][(y-2)/2] = dis[x/2][y/2] + 1;
                 Q.push({x,y-2});
             }
