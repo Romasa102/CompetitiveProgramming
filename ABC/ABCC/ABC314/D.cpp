@@ -14,6 +14,9 @@ int main(){
     ll task[Q];
     ll x[Q];
     char c[Q];
+    rep(i,N){
+        memo[i] = S[i];
+    }
     rep(i,Q){
         cin >> task[i];
         cin >> x[i] >> c[i];
