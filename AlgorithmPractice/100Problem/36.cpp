@@ -6,8 +6,9 @@ using ll = long long;
 using P = pair<ll,ll>;
 int main(){
     ll N,W;
-    ll v[N];
-    ll w[N];
+    cin >> N >> W;
+    ll v[N+1];
+    ll w[N+1];
     rep(i,N){
         cin >> v[i] >> w[i];
     }
@@ -19,14 +20,12 @@ int main(){
     }
     repp(i,1,N+1){
         rep(j,W+1){
-            if(j-w[i]<0){
+            if(j-w[i-1]<0){
                 dp[i][j] = dp[i-1][j];
                 continue;
             }
             else {
-                repp(k,1,j/w[i]){
-                    dp[i][j] = max({dp[i][j],dp[i-1][j],dp[i-1][j-(k * w[i])] + (k * v[i])}) ;
-                }
+                dp[i][j] = max(dp[i-1][j],dp[i][j - w[i-1]] + v[i-1]);
             }
         }
     }
