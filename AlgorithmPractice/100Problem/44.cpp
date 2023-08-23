@@ -7,7 +7,7 @@ using P = pair<ll,ll>;
 int main(){
     vector<ll> Nums;
     ll o = 1;
-    Nums[0] = 1;
+    Nums.push_back(1);
     while(true){
         if(Nums[o-1] + o + 1 >1000000){
             break;
@@ -16,33 +16,49 @@ int main(){
         o++;
     }
     vector<ll> FNum;
+    FNum.push_back(1);
     o = 1;
     while(true) {
-        if (FNum[o - 1] + Nums[o - 1] > 1000000) {
+        if (FNum[o - 1] + Nums[o] > 1000000) {
             break;
         }
-        FNum.push_back(FNum[o - 1] + Nums[o - 1])
+        FNum.push_back(FNum[o - 1] + Nums[o]);
         o++;
+    }
+    ll MAX = 1000000;
+    ll dp[MAX+1];
+    rep(i,MAX+1){
+        dp[i] = 1000;
+    }
+    dp[0] = 0;
+    repp(i,0,MAX+1){
+        rep(j,FNum.size()){
+            if(i + FNum[j] > MAX){
+                break;
+            }
+            dp[i+FNum[j]] = min(dp[i+FNum[j]],dp[i] + 1);
+        }
+    }
+    ll dpO[MAX+1];
+    rep(i,MAX+1){
+        dpO[i] = 1000;
+    }
+    dpO[0] = 0;
+    repp(i,0,MAX+1){
+        rep(j,FNum.size()){
+            if(FNum[j]%2 == 0)continue;
+            if(i + FNum[j] > MAX){
+                break;
+            }
+            dpO[i+FNum[j]] = min(dpO[i+FNum[j]],dpO[i] + 1);
+        }
     }
     while(true){
         ll N;
         cin >> N;
         if(N == 0){
-            return 0;
+            break;
         }
-        ll dp[1000000][FNum.size()];
-        repp(i,1,N + 1){
-            rep(j,FNum.size()){
-                if(j-FNum[i-1] < 0){
-                    dp[i][j] = dp[i-1][j];
-                }
-                dp[i][j] = max(dp[i-1][j-FNum[i-1]],dp[i-1][j]);
-            }
-        }
-        rep(i,N+1){
-            rep(j,){
-
-            }
-        }
+        cout << dp[N] << " " <<  dpO[N] << endl;
     }
 }
