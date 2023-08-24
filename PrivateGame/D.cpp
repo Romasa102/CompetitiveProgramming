@@ -11,21 +11,21 @@ int main(){
     ll b[N];
     ll c[N];
     map<ll,ll> change;
+    vector<P> Change;
     rep(i,N){
         cin >> a[i] >> b[i] >> c[i];
-        change[a[i]] += c[i];
-        change[b[i]+1] -= c[i];
+        Change.push_back({a[i],c[i]});
+        Change.push_back({b[i]+1,-c[i]});
     }
     ll ans = 0;
     ll prev = 0;
-    repp(i,1,10000001){
-        if(change.find(i) != change.end()){
-            prev = prev + change[i];
-        }
-        if(prev > C){
-            ans += C;
+    sort(Change.begin(),Change.end());
+    repp(i,1,Change.size()){
+        prev = prev + Change[i-1].second;
+        if(prev < C){
+            ans += prev * (Change[i].first - Change[i-1].first);
         }else{
-            ans += prev;
+            ans += C * (Change[i].first - Change[i-1].first);
         }
     }
     cout << ans << endl;
