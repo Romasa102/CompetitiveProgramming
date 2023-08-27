@@ -6,11 +6,11 @@ using P = pair<ll,ll>;
 int main(){
     ll V,E,r;
     cin >> V >> E >> r;
-    bool searched[V];
     ll length[V];
+    bool searched[V];
     rep(i,V){
+        length[i] = 1LL << 60;
         searched[i] = false;
-        length[i] = 1 << 50;
     }
     ll s,t,d;
     map<ll,vector<P>> connection;
@@ -18,20 +18,29 @@ int main(){
         cin >> s >> t >> d;
         connection[s].push_back(make_pair(t,d));
     }
-    queue<ll> Q;
-    Q.push(r);
     length[r] = 0;
-    while(Q.size()){
-        ll Now = Q.front();
-        if(searched[Now]){
-            Q.pop();
+    priority_queue<P,vector<P>,greater<P>> PQ;
+    PQ.push({0,r});
+    while(PQ.size()){
+        P Now = PQ.top();
+        PQ.pop();
+        if(searched[Now.second])continue;
+        searched[Now.second] = true;
+        if(length[Now.second] < Now.first){
             continue;
         }
-        searched[Now] = true;
-
-        rep(i,connection[Now].size()){
-            Q.push(connection[Now][i].first);
-            length[connection[Now][i].second]
+        rep(i,connection[Now.second].size()){
+            if(!searched[connection[Now.second][i].first] && length[connection[Now.second][i].first] > length[Now.second] + connection[Now.second][i].second){
+                length[connection[Now.second][i].first] = length[Now.second] + connection[Now.second][i].second;
+                PQ.push(make_pair(length[connection[Now.second][i].first],connection[Now.second][i].first));
+            }
         }
+    }
+    rep(i,V){
+        if(length[i] == 1LL << 60){
+            cout << "INF" << endl;
+            continue;
+        }
+        cout << length[i] << endl;
     }
 }
