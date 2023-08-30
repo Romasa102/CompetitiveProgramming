@@ -2,47 +2,48 @@
 using namespace std;
 using ll = long long;
 #define rep(i,n) for(ll i = 0; i < (n); ++i)
+#define repp(i,o,n) for(ll i = o; i < (n); ++i)
 using P = pair<ll,ll>;
 int main(){
     ll N;
     cin >> N;
-    vector<ll> A(N);
-    vector<ll> B(N);
-    vector<ll> C(N);
-    vector<ll> D(N);
-    rep(i,N) cin >> A[i];
-    rep(i,N) cin >> B[i];
-    rep(i,N) cin >> C[i];
-    rep(i,N) cin >> D[i];
-    sort(A.begin(),A.end());
-    sort(B.begin(),B.end());
-    sort(C.begin(),C.end());
-    sort(D.begin(),D.end());
-    ll minAns = 2000000000;
+    ll A[N];
+    ll B[N];
+    ll C[N];
+    ll D[N];
+    vector<ll> allN;
     rep(i,N){
-        ll k = max({*lower_bound(B.begin(),B.end(),A[i]),*lower_bound(C.begin(),C.end(),A[i]),*lower_bound(D.begin(),D.end(),A[i]),*lower_bound(A.begin(),A.end(),A[i])});
-        if(k>A[i]){
-        minAns = min(minAns,(k-A[i]));
-
-        }
+        cin >> A[i];
+        allN.push_back(A[i]);
     }
     rep(i,N){
-        ll k = max({*lower_bound(A.begin(),A.end(),B[i]),*lower_bound(C.begin(),C.end(),B[i]),*lower_bound(D.begin(),D.end(),B[i]),*lower_bound(B.begin(),B.end(),B[i])});
-        if(k>A[i]){
-            minAns = min(minAns,(k-B[i]));
-        }
+        cin >> B[i];
+        allN.push_back(B[i]);
     }
     rep(i,N){
-        ll k = max({*lower_bound(B.begin(),B.end(),C[i]),*lower_bound(A.begin(),A.end(),C[i]),*lower_bound(D.begin(),D.end(),C[i]),*lower_bound(C.begin(),C.end(),C[i])});
-        if(k>A[i]){
-            minAns = min(minAns,(k-C[i]));
-        }
+        cin >> C[i];
+        allN.push_back(C[i]);
     }
     rep(i,N){
-        ll k = max({*lower_bound(B.begin(),B.end(),D[i]),*lower_bound(C.begin(),C.end(),D[i]),*lower_bound(A.begin(),A.end(),D[i]),*lower_bound(D.begin(),D.end(),D[i])});
-        if(k>A[i]){
-            minAns = min(minAns,(k-D[i]));
-        }
+        cin >> D[i];
+        allN.push_back(D[i]);
     }
-    cout << minAns << endl;
+    sort(A,A+N);
+    sort(B,B+N);
+    sort(C,C+N);
+    sort(D,D+N);
+    ll ans = 1000000010;
+    rep(i,allN.size()){
+        ll SVal = allN[i];
+        if(lower_bound(A,A+N,SVal) == A+N)continue;
+        if(lower_bound(B,B+N,SVal) == B+N)continue;
+        if(lower_bound(C,C+N,SVal) == C+N)continue;
+        if(lower_bound(D,D+N,SVal) == D+N)continue;
+        ll AVal = *lower_bound(A,A+N,SVal);
+        ll BVal = *lower_bound(B,B+N,SVal);
+        ll CVal = *lower_bound(C,C+N,SVal);
+        ll DVal = *lower_bound(D,D+N,SVal);
+        ans = min(ans,max({AVal,BVal,CVal,DVal}) - SVal);
+    }
+    cout << ans << endl;
 }
