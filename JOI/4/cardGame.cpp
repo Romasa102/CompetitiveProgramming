@@ -7,9 +7,9 @@ using P = pair<ll,ll>;
 int main(){
     ll N;
     cin >>N;
-    deque<ll> Taros;
+    vector<ll> Taros;
     map<ll,bool> Taro;
-    deque<ll> Hana;
+    vector<ll> Hana;
     rep(i,N){
         ll A;
         cin >> A;
@@ -23,10 +23,42 @@ int main(){
     }
     sort(Taros.begin(),Taros.end());
     sort(Hana.begin(),Hana.end());
-    ll current = Taros.front();
-    while(Taros.size() && Hana.size()){
-        rep(i,N){
+    ll current = 0;
+    bool TaroTurn = true;
+    while(true){
+        if(TaroTurn){
+            if(Taros.empty()){
+                cout << Hana.size() << endl << Taros.size() << endl;
+                return 0;
+            }
+            bool exist = false;
+            rep(i,Taros.size()){
+                if(Taros[i] > current){
+                    exist = true;
+                    current = Taros[i];
+                    Taros.erase(std::remove(Taros.begin(), Taros.end(),Taros[i]),Taros.end());
+                    break;
+                }
+            }
+            if(!exist)current = 0;
+            TaroTurn = false;
+        }else{
+            if(Hana.empty()){
+                cout << Hana.size() << endl << Taros.size() << endl;
+                return 0;
+            }
+            bool exist = false;
+            rep(i,Hana.size()){
+                if(Hana[i] > current){
+                    exist = true;
+                    current = Hana[i];
+                    Hana.erase(std::remove(Hana.begin(), Hana.end(),Hana[i]),Hana.end());
 
+                    break;
+                }
+            }
+            if(!exist)current = 0;
+            TaroTurn = true;
         }
     }
 }
