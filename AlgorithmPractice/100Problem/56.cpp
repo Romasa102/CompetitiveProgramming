@@ -26,11 +26,8 @@ int main(){
         PQ.pop();
         if(searched[Now.second])continue;
         searched[Now.second] = true;
-        if(length[Now.second] < Now.first){
-            continue;
-        }
         rep(i,connection[Now.second].size()){
-            if(!searched[connection[Now.second][i].first] && length[connection[Now.second][i].first] > length[Now.second] + connection[Now.second][i].second){
+            if(length[connection[Now.second][i].first] > length[Now.second] + connection[Now.second][i].second){
                 length[connection[Now.second][i].first] = length[Now.second] + connection[Now.second][i].second;
                 PQ.push(make_pair(length[connection[Now.second][i].first],connection[Now.second][i].first));
             }
