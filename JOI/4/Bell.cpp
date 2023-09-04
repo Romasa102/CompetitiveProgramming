@@ -12,6 +12,25 @@ int main(){
     rep(i,N)cin >> A[i];
     rep(i,M)cin >> B[i];
     rep(i,M){
-        if(lower_bound(A,A+N,B[i]) != )
+        if(lower_bound(A,A+N,B[i]) != A+N && lower_bound(A,A+N,B[i]) != A){
+            ll ans = max(K-abs(B[i]-*lower_bound(A,A+N,B[i])),K-abs(B[i]-*(lower_bound(A,A+N,B[i])-1)));
+            if(ans < 0){
+                cout << 0 << endl;
+                continue;
+            }
+            cout << ans<< endl;
+        }else if(lower_bound(A,A+N,B[i]) != A){
+            if(K-abs(B[i]-*(lower_bound(A,A+N,B[i])-1)) < 0){
+                cout << 0 << endl;
+                continue;
+            }
+            cout << K-abs(B[i]-*(lower_bound(A,A+N,B[i])-1)) << endl;
+        }else{
+            if(K-abs(B[i]-*(lower_bound(A,A+N,B[i]))) < 0){
+                cout << 0 << endl;
+                continue;
+            }
+            cout << K-abs(B[i]-*(lower_bound(A,A+N,B[i]))) << endl;
+        }
     }
 }

@@ -7,14 +7,25 @@ using P = pair<ll,ll>;
 int main(){
     ll N;
     cin >> N;
-    ll A[N][N];
-    rep(i,N-1){
-        repp(j,i+1,N){
-            cin >> A[i][j];
+    vector<vector<ll>> A(N, vector<ll>(N, 0));
+    rep(i, N) {
+        for(int j = i + 1; j < N; j++) cin >> A[i][j];
+    }
+    ll dp[(1<<N)+100000];
+    rep(i,(1<<N)-1){
+        ll l = -1;
+        rep(j,N){
+            if((i>>j & 1) == false){
+                l = j;
+                break;
+            }
+        }
+        rep(j,N){
+            if((i>>j & 1) == false){
+                ll NGroup = i | (1<<j) | (1<<l);
+                dp[NGroup] = max(dp[NGroup],dp[i] + A[l][j]);
+            }
         }
     }
-    rep(i,(1<<N)-1){
-        ll l = 0;
-        
-    }
+    cout << dp[(1<<N)-1] << endl;
 }
