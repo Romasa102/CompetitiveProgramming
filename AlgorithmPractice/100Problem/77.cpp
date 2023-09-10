@@ -21,8 +21,8 @@ int main(){
     ll ans = 0;
     rep(i,m){
         cin >> a[i];
-        ans += abs(Csum[currentPos + a[i]] - Csum[currentPos]);
+        ans += abs(Csum[currentPos + a[i]] - Csum[currentPos])%100000;
         currentPos += a[i];
     }
-    cout << ans << endl;
+    cout << ans%100000 << endl;
 }
