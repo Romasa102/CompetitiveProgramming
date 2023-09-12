@@ -13,10 +13,10 @@ int main(){
     deque<ll> leftS;
     rep(i,S.size()){
         if(S[i] == '#'){
-            if(i > A){
-                rightS.push_back(A-i);
+            if(i >= A-1){
+                rightS.push_back(i-A+1);
             }else{
-                leftS.push_back(abs(i-A));
+                leftS.push_back(abs(A-i-1));
             }
         }
     }
@@ -24,13 +24,30 @@ int main(){
     sort(leftS.begin(),leftS.end());
     bool leftside = true;
     ll before = 0;
-    while(!rightS.empty() && !leftS.empty()){
+    ll ans = 0;
+    while(!rightS.empty() || !leftS.empty()){
         if(leftside){
-            ll o = rightS.front();
-            rightS.pop_front();
+            if(rightS.empty()){
+                ans += N-A+before+1;
+                before = N-A+1;
+            }else {
+                ll o = rightS.front();
+                rightS.pop_front();
+                ans += before + o;
+                before = o;
+            }
         }else{
-            ll o = leftS.front();
-            leftS.pop_front();
+            if(leftS.empty()){
+                ans += before+A;
+                before = A;
+            }else {
+                ll o = leftS.front();
+                leftS.pop_front();
+                ans += before + o;
+                before = o;
+            }
         }
+        leftside = !leftside;
     }
+    cout << ans << endl;
 }
