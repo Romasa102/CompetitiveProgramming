@@ -19,24 +19,34 @@ int main(){
         have[Num[i]] = true;
     }
     sort(Num,Num+k);
-    ll contCount[n];
     ll ans = 0;
-    repp(i,1,n){
-        if(have.find(i) != have.end()){
-            contCount[i] = contCount[i-1] +1;
-            ans = max(ans,contCount[i]);
-        }else{
-            contCount[i] = 1;
+    ll cont = 1;
+    ll beforeCon = 0;
+    if(!white) {
+        rep(i,k - 1) {
+            if (Num[i]+1 == Num[i + 1]) {
+                cont++;
+            }else{
+                cont = 1;
+            }
+            ans = max(ans,cont);
         }
-    }
-    ll cash = 0;
-    ll num = 0;
-    for(int i = n - 1; i > 0; i--){
-        if(cash != 0){
-
+        cout << ans << endl;
+    }else{
+        repp(i,1,k-1){
+            if(Num[i]+1 == Num[i+1]){
+                cont++;
+            }else{
+                if(Num[i]+2 == Num[i+1]){
+                    beforeCon = cont+1;
+                    cont = 1;
+                }else{
+                    beforeCon = 0;
+                    cont = 1;
+                }
+            }
+            ans = max(ans,beforeCon+cont);
         }
-        if(contCount[i] != 1){
-            cash = contCount[i];
-        }
+        cout << ans << endl;
     }
 }
