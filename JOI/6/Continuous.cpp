@@ -31,7 +31,7 @@ int main(){
         stack<P> S;
         ll deleted = 0;
         bool found = false;
-        rep(i,rowS.size()){
+        rep(i,rowS.size()-1){
             if(rowS[i].second == 1 && searched.find(i) == searched.end()){
                 searched[i] = true;
                 found = true;
@@ -41,15 +41,30 @@ int main(){
                         break;
                     }
                     if(rowS[count].first == S.top().first){
-                        rowS[count].second+=S.top().second;
-                        if(rowS[count].second >= 4) {
-                            deleted += S.top().second + rowS[count].second;
+                        if(count == i+1){
+                            if(rowS[count].second+S.top().second >= 3){
+                                deleted += rowS[count].second + S.top().second;
+                                S.pop();
+                                count++;
+                                continue;
+                            }else{
+                                break;
+                            }
+                        }
+                        if(rowS[count].second+S.top().second >= 4) {
+                            deleted += rowS[count].second + S.top().second;
+                            S.pop();
+                            count++;
+                            continue;
                         }else{
                             break;
                         }
-                        S.pop();
-                        count++;
+                    }else{
+                        break;
                     }
+                }
+                if(deleted!=0){
+                    deleted++;
                 }
                 ans = max(ans,deleted);
                 break;
@@ -61,5 +76,5 @@ int main(){
             break;
         }
     }
-    cout << n - ans -1 << endl;
+    cout << n - ans << endl;
 }
