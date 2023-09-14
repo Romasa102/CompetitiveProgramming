@@ -31,14 +31,36 @@ int main(){
         stack<P> S;
         ll deleted = 0;
         bool found = false;
-        rep(i,rowS.size()-1){
+        rep(i,rowS.size()){
             if(rowS[i].second == 1 && searched.find(i) == searched.end()){
                 searched[i] = true;
                 found = true;
                 ll count = i+1;
                 while(true){
-                    if(count>=rowS.size()||S.empty()){
-                        break;
+                    if(count>=rowS.size()){
+                        if(!S.empty() && count == i+1){
+                            if(S.top().second >= 3) {
+                                deleted += S.top().second;
+                                S.pop();
+                                break;
+                            }
+                        }else{
+                            break;
+                        }
+                    }
+                    if(S.empty()){
+                        if(count == i+1){
+                            if(rowS[count].second >= 3){
+                                deleted += rowS[count].second;
+                                S.pop();
+                                count++;
+                                break;
+                            }else{
+                                break;
+                            }
+                        }else{
+                            break;
+                        }
                     }
                     if(rowS[count].first == S.top().first){
                         if(count == i+1){
