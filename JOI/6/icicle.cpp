@@ -8,65 +8,39 @@ int main(){
     ll N,L;
     cin >> N >> L;
     ll A[N];
+    ll timeT[N];
     rep(i,N){
         cin >> A[i];
+        timeT[i] = L-A[i];
     }
-    ll wait[N];
-    rep(i,N)wait[i] = 0;
-    if(wait[0] < wait[1]){
-        wait[0] = 1;
-    }
-    if(wait[N-1] < wait[N-2]){
-        wait[N-1] = 1;
-    }
-    vector<ll> DESTROY;
+    ll count[N];
+    rep(i,N)count[i]=0;
+    priority_queue<P,vector<P>,greater<P>> Q;
+    if(A[0]<A[1])count[0]++;
+    if(A[N-1]<A[N-2])count[N-1]++;
+    if(count[0]==0)Q.push({timeT[0],0});
+    if(count[N-1]==0)Q.push({timeT[N-1],N-1});
     repp(i,1,N-1){
-        if(A[i] < A[i-1]){
-            wait[i]++;
-        }
-        if(A[i] < A[i+1]){
-            wait[i]++;
-        }
-        if(wait[i] == 0){
-            DESTROY.push_back(i);
-        }
+        if(A[i]<A[i+1])count[i]++;
+        if(A[i]<A[i-1])count[i]++;
+        if(count[i] == 0)Q.push({timeT[i], i});
     }
-    ll Btime[N];
-    rep(i,N){
-        Btime[i] = L - A[i];
-    }
-    ll waitT[N];
-    ll ans = 0;
-    vector<ll> DESTROYT;
-    rep(i,DESTROY.size()){
-        if(wait[DESTROY[i]-1] !=0){
-            wait[DESTROY[i]-1]--;
-            waitT[DESTROY[i]-1] = max(Btime[DESTROY[i]],waitT[DESTROY[i]-1]);
-            if(wait[DESTROY[i]-1] == 0){
-                Btime[DESTROY[i]-1] += waitT[DESTROY[i]-1];
-                ans = max(ans,Btime[DESTROY[i]-1]);
-                DESTROYT.push_back(DESTROY[i]-1);
+    ll ans =0;
+    while(!Q.empty()){
+        P O = Q.top();
+        Q.pop();
+        if(O.second+1<N&&count[O.second+1]>0){
+            count[O.second+1]--;
+            if(count[O.second+1]==0){
+                Q.push({timeT[O.second+1]+O.first,O.second+1});
             }
         }
-        if(wait[DESTROY[i]+1] != 0){
-            wait[DESTROY[i]+1]--;
-            waitT[DESTROY[i]+1] = max(Btime[DESTROY[i]],waitT[DESTROY[i]+1]);
-            if(wait[DESTROY[i]+1] == 0){
-                Btime[DESTROY[i]+1] += waitT[DESTROY[i]+1];
-                ans = max(ans,Btime[DESTROY[i]+1]);
-                DESTROYT.push_back(DESTROY[i]+1);
+        if(O.second-1>=0&&count[O.second-1]>0){
+            count[O.second-1]--;
+            if(count[O.second-1]==0){
+                Q.push({timeT[O.second-1]+O.first,O.second-1});
             }
         }
-    }
-    rep(i,DESTROYT.size()){
-        if(wait[DESTROYT[i]-1]!=0){
-            waitT[DESTROY[i]-1] = max(Btime[DESTROY[i]],waitT[DESTROY[i]-1]);
-            ans = max(ans,Btime[DESTROY[i]]+Btime[DESTROY[i]-1]);
-        }
-        if(wait[DESTROYT[i]+1]!=0){
-            waitT[DESTROY[i]+1] = max(Btime[DESTROY[i]],waitT[DESTROY[i]+1]);
-            ans = max(ans,Btime[DESTROY[i]]+Btime[DESTROY[i]+1]);
-        }
-    }
-    cout << ans << endl;
+        ans = max(ans,O.first);
+    }cout << ans << endl;
 }
