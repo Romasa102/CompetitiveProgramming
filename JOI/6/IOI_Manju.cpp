@@ -27,9 +27,7 @@ int main(){
     }
     ll ans = 0;
     rep(i,M){
-        cout << CountPrice[i+1] << " " << dp[i+1] << " " << endl;
         ans = max(ans,CountPrice[i+1] - dp[i+1]);
-        cout << ans << endl;
     }
     cout << ans << endl;
 }
