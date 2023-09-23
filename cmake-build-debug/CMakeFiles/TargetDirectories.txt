@@ -1,6 +1,6 @@
-/Users/manabemasaaki/CompetitiveProgramming/cmake-build-debug/CMakeFiles/CompetitiveProgramming.dir
-/Users/manabemasaaki/CompetitiveProgramming/cmake-build-debug/CMakeFiles/20.dir
-/Users/manabemasaaki/CompetitiveProgramming/cmake-build-debug/CMakeFiles/23.dir
-/Users/manabemasaaki/CompetitiveProgramming/cmake-build-debug/CMakeFiles/27.dir
-/Users/manabemasaaki/CompetitiveProgramming/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/manabemasaaki/CompetitiveProgramming/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/romas/CompetitiveProgramming/cmake-build-debug/CMakeFiles/CompetitiveProgramming.dir
+C:/Users/romas/CompetitiveProgramming/cmake-build-debug/CMakeFiles/20.dir
+C:/Users/romas/CompetitiveProgramming/cmake-build-debug/CMakeFiles/23.dir
+C:/Users/romas/CompetitiveProgramming/cmake-build-debug/CMakeFiles/27.dir
+C:/Users/romas/CompetitiveProgramming/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/romas/CompetitiveProgramming/cmake-build-debug/CMakeFiles/rebuild_cache.dir
