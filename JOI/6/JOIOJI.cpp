@@ -16,6 +16,6 @@ int main(){
     rep(i,N){
         if(S[i] == 'J') Jcount[i+1] = Jcount[i] + 1;
         else Jcount[i+1] = Jcount[i];
-        
+
     }
 }
