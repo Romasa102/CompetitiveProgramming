@@ -7,35 +7,19 @@ using P = pair<ll,ll>;
 int main(){
     ll N,M,K;
     cin >> N >> M >> K;
-    deque<ll> A(N);
+    ll A[N];
     rep(i,N)cin >> A[i];
-    ll diff = 0;
-    ll count = 0;
-    ll ans  = 0;
-    ll currentMax = 0;
-    ll currentMin = 0;
-    rep(i,A.size())cout << A[i] << " ";
-    cout << endl;
-    ll ansB = 0;
-    while(A.size() != 1){
-        currentMax = max({A[0],A[1],currentMax});
-        currentMin = min({A[0],A[1],currentMin});
-        if(((diff+(count+1)*(currentMax-currentMin)) - ansB>K || count == M)&&count!=0){
-            ans += K+count*diff;
-            diff=0;
-            count = 0;
-            cout << A.size() << K+count * diff << endl;
-            continue;
+    ll dp[N+1];
+    rep(i,N+1)dp[i]=0;
+    dp[0] = 0;
+    rep(i,N+1){
+        ll minN = 1LL<<32;
+        ll maxN = 0;
+        rep(j,min(M,i)){
+            minN = min(minN,A[i-j]);
+            maxN = max(maxN,A[i-j]);
+            dp[i] = min(dp[i],dp[i-j] + K + (j+1) * (maxN-minN));
         }
-        diff += currentMax-currentMin;
-        A.pop_front();
-        count++;
-        ansB = diff+count*(currentMax-currentMin);
-        cout << A.size() << endl;
     }
-    if(count!=0){
-        ans += K+count*diff;
-        cout << A.size() << K+count * diff << endl;
-    }
-    cout << ans << endl;
+    cout << dp[N] << endl;
 }

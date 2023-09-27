@@ -39,10 +39,14 @@ int main(){
             }
             ll near = *upper_bound(moveR.begin(),moveR.end(),a);
             ll nearL = *(lower_bound(moveL.begin(),moveL.end(),near)-1);
-            if(near-a < T){
+            if(abs(near-a) < 2*T){
                 ll ans = 0;
                 if(nearL > a){
-                    ans = (nearL+a/2);
+                    ans = (nearL+near)/2;
+                    if(abs(a-ans)>=T){
+                        cout << a+T << endl;
+                        continue;
+                    }
                 }else{
                     ans = (near + a) / 2;
                 }
@@ -52,15 +56,19 @@ int main(){
             cout << a+T << endl;
         }else{
             if(upper_bound(moveL.begin(),moveL.end(),a) == moveL.begin()){
-                cout << a-T << endl;
+                cout << a - T << endl;
                 continue;
             }
             ll near = *(upper_bound(moveL.begin(),moveL.end(),a)-1);
             ll nearR = *upper_bound(moveR.begin(),moveR.end(),near);
-            if(a-near < T){
+            if(abs(a-near) < 2*T){
                 ll ans = 0;
                 if(nearR < a){
-                    ans = (nearR+a)/2;
+                    ans = (nearR+near)/2;
+                    if(abs(a-ans)>=T){
+                        cout << a-T << endl;
+                        continue;
+                    }
                 }else{
                     ans = (near + a) / 2;
                 }
