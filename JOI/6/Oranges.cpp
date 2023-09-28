@@ -10,15 +10,15 @@ int main(){
     ll A[N];
     rep(i,N)cin >> A[i];
     ll dp[N+1];
-    rep(i,N+1)dp[i]=0;
+    rep(i,N+1)dp[i]=1LL<<40;
     dp[0] = 0;
-    rep(i,N+1){
-        ll minN = 1LL<<32;
+    repp(i,1,N+1){
+        ll minN = 1LL<<40;
         ll maxN = 0;
         rep(j,min(M,i)){
-            minN = min(minN,A[i-j]);
-            maxN = max(maxN,A[i-j]);
-            dp[i] = min(dp[i],dp[i-j] + K + (j+1) * (maxN-minN));
+            minN = min(minN,A[i-j-1]);
+            maxN = max(maxN,A[i-j-1]);
+            dp[i] = min(dp[i],dp[i-j-1] + K + (j+1) * abs(maxN-minN));
         }
     }
     cout << dp[N] << endl;
