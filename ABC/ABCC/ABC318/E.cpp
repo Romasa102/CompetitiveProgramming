@@ -6,6 +6,7 @@ using ll = long long;
 using P = pair<ll,ll>;
 int main(){
     ll N;
+    cin >> N;
     ll A[N];
     map<ll,vector<ll>> num;
     rep(i,N){
@@ -13,7 +14,11 @@ int main(){
         num[A[i]].push_back(i);
     }
     ll ans = 0;
-    rep(i,N){
-
+    for (auto it = num.begin(); it != num.end(); it++)
+    {
+        rep(i,it->second.size()-1){
+            ans += (it->second[i+1] - it->second[i]-1) * ((it->second.size()-i-1) * (i+1));
+        }
     }
-} 
+    cout << ans << endl;
+}
