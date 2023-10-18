@@ -50,7 +50,6 @@ ll get_ans(ll A,ll B){
 int main(){
     ll A,B;
     cin >> A >> B;
-    B%=998244353;
     ll ans = get_ans(A,B);
     cout << (ll)ans << endl;
 }
