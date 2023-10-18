@@ -10,23 +10,44 @@ int main(){
     if(N%2==1)return 0;
     vector<string> sets;
     for(ll i = 0;i<(1LL<<N); i++){
-        char cur[N];
+        string cur="";
         rep(j,N){
-            cur[i] = 'a';
+            cur+= 'a';
         }
         rep(j,N){
             if(i&1<<j){
-                cur[j] = 'b';
+                cur[j]='b';
             }
         }
         sets.push_back(cur);
     }
+    set<string> ans;
     rep(i,sets.size()){
-        queue<char> Lbracket;
+        queue<int> Lbracket;
+        bool ok = true;
         rep(j,sets[i].size()){
-            if(sets[i][j] == '('){
-                Lbracket.
+            if(sets[i][j] == 'a'){
+                Lbracket.push(1);
+            }else{
+                if(Lbracket.empty()){
+                    ok = false;
+                    break;
+                }
+                Lbracket.pop();
             }
         }
+        if(Lbracket.empty()&&ok){
+            ans.insert(sets[i]);
+        }
+    }
+    for(string i:ans){
+        rep(j,i.size()){
+            if(i[j]=='a'){
+                i[j]='(';
+            }else{
+                i[j]=')';
+            }
+        }
+        cout << i << endl;
     }
 }
