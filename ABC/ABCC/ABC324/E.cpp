@@ -22,7 +22,7 @@ int main(){
                 cur++;
             }
             if(S[i][k] == T[curB]){
-                curB--;
+                curB--;//suffix
             }
         }
         fronts[cur]++;
