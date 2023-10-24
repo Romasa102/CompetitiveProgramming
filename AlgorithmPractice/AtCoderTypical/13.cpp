@@ -24,15 +24,33 @@ int main(){
     while(!PQ.empty()){
        P cur = PQ.top();
        PQ.pop();
-       dis[cur.first]=cur.second;
-       if(searched[cur.first])continue;
-       searched[cur.first]=true;
-       for(P i:map[cur.first]){
-           PQ.push({i.first,cur.second+i.second});
+       if(searched[cur.second])continue;
+       dis[cur.second]=cur.first;
+       searched[cur.second]=true;
+       for(P i:map[cur.second]){
+           PQ.push({cur.first+i.second,i.first});
        }
     }
     rep(i,N){
         cout << dis[i] << endl;
     }
-    cout << dis[N-1] << endl;
+    cout << endl << endl;
+    rep(i,N)searched[i]=false;
+    priority_queue<P,vector<P>,greater<P>> PQB;
+    PQB.push({0,N-1});
+    ll disB[N];
+    rep(i,N)disB[i]=0;
+    while(!PQB.empty()){
+        P cur = PQB.top();
+        PQB.pop();
+        if(searched[cur.second])continue;
+        disB[cur.second]=cur.first;
+        searched[cur.second]=true;
+        for(P i:map[cur.second]){
+            PQB.push({cur.first+i.second,i.first});
+        }
+    }
+    rep(i,N){
+        cout << disB[i] << endl;
+    }
 }
