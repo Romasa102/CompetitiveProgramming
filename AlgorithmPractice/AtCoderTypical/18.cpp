@@ -5,25 +5,22 @@ using ll = long long;
 #define repp(i,o,n) for(ll i = o; i < (n); ++i)
 using P = pair<ll,ll>;
 int main(){
-    ll T;
-    ll L,X,Y;
+    long double T;
+    long double L,X,Y;
     cin >> T >> L >> X >> Y;
     ll Q;
-    ll E[Q];
     cin >> Q;
+    ll E[Q];
     rep(i,Q){
         cin>>E[i];
-        E[i]%=T;
-        double x=0;
-        double y=0;
-        if(E[i]<(double)T/4){
-            (double)L/2
-        }else if(E[i]<(double)T/2){
-
-        }else if(E[i]<(double)T*3/4){
-
-        }else{
-
-        }
+        E[i]%=(ll)T;
+        long double cur = T-E[i];
+        long double num=(cur/T)*2*M_PI;
+        long double x = sin(num)*L/2;
+        long double y = L/2-cos(num)*L/2;
+        long double ans = 0;
+        ans = atan2(y,sqrt(X*X+(x-Y)*(x-Y)));
+        ans = ans*180.0L/M_PI;
+        cout<<fixed<< setprecision(10)  <<ans << endl;
     }
 }
