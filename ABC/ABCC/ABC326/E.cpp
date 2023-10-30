@@ -6,7 +6,10 @@ using ll = long long;
 using P = pair<ll,ll>;
 int main(){
     ll N;
-    vector<P> character;
     cin >> N;
     ll A[N];
+    rep(i,N){
+        cin >> A[i];
+    }
+
 }

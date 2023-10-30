@@ -5,8 +5,7 @@ using ll = long long;
 #define repp(i,o,n) for(ll i = o; i < (n); ++i)
 using P = pair<ll,ll>;
 int main(){
-    ll N;
-    vector<P> character;
-    cin >> N;
-    ll A[N];
+    ll N,X,Y;
+    cin >> N >> X >> Y;
+    ll 
 }
