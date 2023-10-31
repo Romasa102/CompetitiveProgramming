@@ -4,9 +4,11 @@ using ll = long long;
 #define rep(i,n) for(ll i = 0; i < (n); ++i)
 #define repp(i,o,n) for(ll i = o; i < (n); ++i)
 using P = pair<ll,ll>;
+
+void dfs(ll a,ll b,)
 int main(){
     ll N;
-    vector<P> character;
-    cin >> N;
-    ll A[N];
+    string R,C;
+    cin >> N >> R >> C;
+
 }
