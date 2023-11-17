@@ -10,5 +10,5 @@ int main(){
     ll N;
     string R,C;
     cin >> N >> R >> C;
-
+    
 }
