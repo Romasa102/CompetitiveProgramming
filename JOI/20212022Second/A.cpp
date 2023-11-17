@@ -4,18 +4,17 @@ using ll = long long;
 using namespace std;
 using P = pair<ll,ll>;
 int main(){
-    stack<string> book;
-    ll N;
-    cin >> N;
-    rep(i,N){
-        string S;
-        cin >> S;
-        if(S == "READ"){
-            cout << book.top() << endl;
-            book.pop();
-        }
-        else{
-            book.push(S);
+    ll Q;
+    cin >> Q;
+    stack<string> s;
+    rep(i,Q){
+        string a;
+        cin >> a;
+        if(a=="READ"){
+            cout << s.top() << endl;
+            s.pop();
+        }else{
+            s.push(a);
         }
     }
 }
