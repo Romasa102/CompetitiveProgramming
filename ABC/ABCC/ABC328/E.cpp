@@ -50,4 +50,5 @@ int main(){
         }
     }
     cout << Fans << endl;
+
 }
