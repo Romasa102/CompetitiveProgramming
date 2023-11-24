@@ -12,25 +12,26 @@ int main(){
     map<ll,vector<ll>> nums;
     rep(i,N){
         cin >> C[i];
+        type[i].insert(C[i]);
     }
     rep(i,Q){
         ll a,b;
         cin >> a >> b;
         a--;b--;
         //move all a to b and count the type in b;
-        //if(type[a].size()>type[b].size()){
-        //    for(ll j:type[b]){
-        //        type[a].insert(j);
-        //    }
-        //    type[b].clear();
-        //    cout << type[a].size() << endl;
-        //    swap(type[a],type[b]);
-        //}else{
+        if(type[a].size()>type[b].size()){
+            for(ll j:type[b]){
+                type[a].insert(j);
+            }
+            cout << type[a].size() << endl;
+            type[b].clear();
+            swap(type[a],type[b]);
+        }else{
             for(ll j:type[a]){
                 type[b].insert(j);
             }
+            cout << type[b].size()   << endl;
             type[a].clear();
-            cout << type[b].size() << endl;
-        //}
+        }
     }
 }

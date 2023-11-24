@@ -8,6 +8,7 @@ ll N,M;
 string S,T;
 ll curL = 0;
 ll dfsP(ll x){//dfs prefix
+    if(x<curL)return x;
     repp(i,1,M+1){
         ll counter = 0;
         bool work = true;
