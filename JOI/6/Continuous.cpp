@@ -9,51 +9,48 @@ int main(){
     cin >> N;
     ll A[N];
     rep(i,N)cin >> A[i];
-    ll fans = 0;
+    ll fans = 1LL<<60;
     rep(i,N){
         rep(j,3){
             ll ans = 0;
             stack<P> St;
             rep(k,N){
-                if(i==k){
-                    if(St.empty()){
-                        St.push({j,1});
-                        continue;
-                    }
-                    if(j+1==St.top().first){
-                        if(St.empty())continue;
-                        St.top().second++;
-                    }else{
-                        if(St.top().second>=4){
-                            St.pop();
-                        }
-                        if(j+1==St.top().first){
-                            St.push({j+1,1});
-                            St.top().second++;
-                        }
-                    }
-                    continue;
-                }
+                ll cur = A[k];
+                if(i==k)cur=j+1;
                 if(St.empty()){
-                    St.push({A[k],1});
+                    St.push({cur,1});
                     continue;
                 }
-                if(A[k]==St.top().first){
+                if(cur==St.top().first){
                     St.top().second++;
+                    continue;
                 }else{
                     if(St.top().second>=4){
-                        if(St.empty())continue;
                         St.pop();
+                        if(St.empty()){
+                            St.push({cur,1});
+                            continue;
+                        }
+                        if(St.top().first!=cur){
+                            St.push({cur,1});
+                        }else{
+                            St.top().second++;
+                        }
+                    }else{
+                        St.push({cur,1});
                     }
-                    St.push({A[k],1});
                 }
             }
             while(!St.empty()){
                 if(St.empty())continue;
+                if(St.top().second>=4){
+                    St.pop();
+                    continue;
+                }
                 ans += St.top().second;
                 St.pop();
             }
-            fans=max(fans,ans);
+            fans=min(fans,ans);
         }
     }
     cout << fans << endl;

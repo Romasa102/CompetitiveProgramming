@@ -4,100 +4,32 @@ using ll = long long;
 #define rep(i,n) for(ll i = 0; i < (n); ++i)
 #define repp(i,o,n) for(ll i = o; i < (n); ++i)
 using P = pair<ll,ll>;
-template<int MOD> struct Fp {
-    long long val;
-    constexpr Fp(long long v = 0) noexcept : val(v % MOD) {
-        if (val < 0) val += MOD;
-    }
-    constexpr int getmod() const { return MOD; }
-    constexpr Fp operator - () const noexcept {
-        return val ? MOD - val : 0;
-    }
-    constexpr Fp operator + (const Fp& r) const noexcept { return Fp(*this) += r; }
-    constexpr Fp operator - (const Fp& r) const noexcept { return Fp(*this) -= r; }
-    constexpr Fp operator * (const Fp& r) const noexcept { return Fp(*this) *= r; }
-    constexpr Fp operator / (const Fp& r) const noexcept { return Fp(*this) /= r; }
-    constexpr Fp& operator += (const Fp& r) noexcept {
-        val += r.val;
-        if (val >= MOD) val -= MOD;
-        return *this;
-    }
-    constexpr Fp& operator -= (const Fp& r) noexcept {
-        val -= r.val;
-        if (val < 0) val += MOD;
-        return *this;
-    }
-    constexpr Fp& operator *= (const Fp& r) noexcept {
-        val = val * r.val % MOD;
-        return *this;
-    }
-    constexpr Fp& operator /= (const Fp& r) noexcept {
-        long long a = r.val, b = MOD, u = 1, v = 0;
-        while (b) {
-            long long t = a / b;
-            a -= t * b, swap(a, b);
-            u -= t * v, swap(u, v);
-        }
-        val = val * u % MOD;
-        if (val < 0) val += MOD;
-        return *this;
-    }
-    constexpr bool operator == (const Fp& r) const noexcept {
-        return this->val == r.val;
-    }
-    constexpr bool operator != (const Fp& r) const noexcept {
-        return this->val != r.val;
-    }
-    friend constexpr istream& operator >> (istream& is, Fp<MOD>& x) noexcept {
-        is >> x.val;
-        x.val %= MOD;
-        if (x.val < 0) x.val += MOD;
-        return is;
-    }
-    friend constexpr ostream& operator << (ostream& os, const Fp<MOD>& x) noexcept {
-        return os << x.val;
-    }
-    friend constexpr Fp<MOD> modpow(const Fp<MOD>& r, long long n) noexcept {
-        if (n == 0) return 1;
-        if (n < 0) return modpow(modinv(r), -n);
-        auto t = modpow(r, n / 2);
-        t = t * t;
-        if (n & 1) t = t * r;
-        return t;
-    }
-    friend constexpr Fp<MOD> modinv(const Fp<MOD>& r) noexcept {
-        long long a = r.val, b = MOD, u = 1, v = 0;
-        while (b) {
-            long long t = a / b;
-            a -= t * b, swap(a, b);
-            u -= t * v, swap(u, v);
-        }
-        return Fp<MOD>(u);
-    }
-};
-const int MOD = 998244353;
-using mint = Fp<MOD>;
 int main(){
-    ll N,Pn;
-    cin >> N >> Pn;
-    ll h[N];
-    ll cumS[N+1];
+    ll n,Pn;
+    cin >> n >> Pn;
+    ll h[n];
+    vector<ll> cumS(n+1);
     cumS[0] = 0;
-    rep(i,N)cin>>h[i];
-    repp(i,1,N+1){
+    rep(i,n)cin>>h[i];
+    repp(i,1,n+1){
         cumS[i]=cumS[i-1]+h[i-1];
     }
-    ll dp[N];
-    rep(i,N){
-        dp[i]=1LL<<40;
-    }
-    dp[0]=0;
+    vector<ll> dp(n+1);
+    vector<ll> changeN(n+10);
+    rep(i,n+10)changeN[i]=0;
     ll cur = 0;
-    map<ll,ll> dec;
-    rep(i,N){
-        ll goal = *lower_bound(cumS,cumS+N+1,h[i]+Pn);
-        cur+=;
-        dec[goal]=-1;
-
+    dp[0]=1;
+    rep(i,n+1){
+        cur+=changeN[i];
+        dp[i]=cur;
+        if(i==0)dp[i]=1;
+        if(lower_bound(cumS.begin(),cumS.end(),cumS[i]+Pn)!=cumS.end()){
+            ll howL = lower_bound(cumS.begin(),cumS.end(),cumS[i]+Pn)-cumS.begin();
+            changeN[i+1]+=dp[i];
+            changeN[howL]-=dp[i];
+        }else{
+            changeN[i+1]+=dp[i];
+        }
     }
+    cout << dp[n] << endl;
 }
