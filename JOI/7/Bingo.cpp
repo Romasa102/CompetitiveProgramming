@@ -5,14 +5,13 @@ using ll = long long;
 #define repp(i,o,n) for(ll i = o; i < (n); ++i)
 using P = pair<ll,ll>;
 int main(){
-    ll N;
-    cin >> N;
-    ll A[N];
-    rep(i,N){
-        cin >> A[i];
-    }
-    P dp[N][N];
-    rep(j,N){
-        dp[0][j].first=A[j];
+    ll N,M,S;
+    cin >> N >> M >> S;
+    //N < 7
+    //M is maximum number possible < 2000
+    //Total sum < 3000
+    //must be some kind of dp
+    rep(i,N*N){
+        
     }
 }
