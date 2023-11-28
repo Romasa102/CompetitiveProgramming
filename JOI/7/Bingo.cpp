@@ -12,6 +12,6 @@ int main(){
     //Total sum < 3000
     //must be some kind of dp
     rep(i,N*N){
-        
+
     }
 }
