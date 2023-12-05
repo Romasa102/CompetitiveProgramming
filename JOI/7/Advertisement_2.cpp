@@ -34,12 +34,14 @@ int main(){
         }
         if(dif.empty()){
             ppl[i]=true;
+            curM = max(curM,XE[i].first+XE[i].second);
         }else{
             bestPower = (upper_bound(dif.begin(), dif.end(),make_pair(dif.front().first, 1LL<<50)) - 1);
             if(bestPower->first<=search){
                 ppl[bestPower->second]=true;
             }else{
                 ppl[i] = true;
+                curM = max(curM,XE[i].first+XE[i].second);
             }
         }
     }
