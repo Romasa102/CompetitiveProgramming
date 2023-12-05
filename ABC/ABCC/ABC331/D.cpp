@@ -40,19 +40,48 @@ int main(){
             cout << getSum(c,d,a,b) << endl;
             continue;
         }
+        if(width==-1){
+            ll ans =0;
+            //left top
+            ans += getSum(N,N,topY,topX);
+            //right bottom
+            ans += getSum(bottomY+1,bottomX+1,0,0);
+            //left bottom
+            ans += getSum(bottomY+1,N,0,topX);
+            //right top
+            ans += getSum(N,bottomX+1,topY,0);
+
+            height=max(height,0LL);
+            //side vertical
+            ans += height * (getSum(N,N,0,topX)+getSum(N,bottomX+1,0,0));
+            cout << ans << endl;
+            continue;
+        }
+        if(height==-1){
+            ll ans =0;
+            //left top
+            ans += getSum(N,N,topY,topX);
+            //right bottom
+            ans += getSum(bottomY+1,bottomX+1,0,0);
+            //left bottom
+            ans += getSum(bottomY+1,N,0,topX);
+            //right top
+            ans += getSum(N,bottomX+1,topY,0);
+            width=max(width,0LL);
+            //side horizontal
+            ans += width * (getSum(N,N,topY,0) + getSum(bottomY+1,N,0,0));
+            cout << ans << endl;
+            continue;
+        }
         ll ans =0;
         //left top
         ans += getSum(N,N,topY,topX);
         //right bottom
         ans += getSum(bottomY+1,bottomX+1,0,0);
-        if(width!=-1&&height!=-1){
-            //left bottom
-            ans += getSum(bottomY+1,N,0,topX);
-        }
-        if(width!=-1&&height!=-1){
-            //right top
-            ans += getSum(N,bottomX+1,topY,0);
-        }
+        //left bottom
+        ans += getSum(bottomY+1,N,0,topX);
+        //right top
+        ans += getSum(N,bottomX+1,topY,0);
         width=max(width,0LL);
         height=max(height,0LL);
         //inside
@@ -61,7 +90,6 @@ int main(){
         ans += height * (getSum(N,N,0,topX)+getSum(N,bottomX+1,0,0));
         //side horizontal
         ans += width * (getSum(N,N,topY,0) + getSum(bottomY+1,N,0,0));
-
         cout << ans << endl;
     }
 }
