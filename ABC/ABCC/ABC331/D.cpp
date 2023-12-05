@@ -43,33 +43,22 @@ int main(){
         if(width==-1){
             ll ans =0;
             //left top
-            ans += getSum(N,N,topY,topX);
+            ans += getSum(bottomY+1,N,topY,topX);
             //right bottom
-            ans += getSum(bottomY+1,bottomX+1,0,0);
-            //left bottom
-            ans += getSum(bottomY+1,N,0,topX);
-            //right top
-            ans += getSum(N,bottomX+1,topY,0);
-
-            height=max(height,0LL);
+            ans += getSum(bottomY+1,bottomX+1,topY,0);
             //side vertical
-            ans += height * (getSum(N,N,0,topX)+getSum(N,bottomX+1,0,0));
+            ans += height * getSum(bottomY+1,N,topY,0);
             cout << ans << endl;
             continue;
         }
         if(height==-1){
             ll ans =0;
             //left top
-            ans += getSum(N,N,topY,topX);
+            ans += getSum(N,bottomX+1,topY,topX);
             //right bottom
-            ans += getSum(bottomY+1,bottomX+1,0,0);
-            //left bottom
-            ans += getSum(bottomY+1,N,0,topX);
-            //right top
-            ans += getSum(N,bottomX+1,topY,0);
-            width=max(width,0LL);
+            ans += getSum(bottomY+1,bottomX+1,0,topX);
             //side horizontal
-            ans += width * (getSum(N,N,topY,0) + getSum(bottomY+1,N,0,0));
+            ans += width * getSum(N,bottomX+1,0,topX);
             cout << ans << endl;
             continue;
         }
