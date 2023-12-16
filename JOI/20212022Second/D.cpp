@@ -8,10 +8,16 @@ int main(){
     ll K,N;//K,N<3001
     cin >> K >> N;
     ll A[N];//<10^9
-    priority_queue<P> num;
     rep(i,N){
         cin >> A[i];
-        num.push({A[i],i});
     }
-
+    ll dp[N][K][K];
+    rep(i,N)rep(j,N)rep(k,N)dp[i][j][k]=0;
+    rep(i,N){
+        rep(j,K){//one before
+            rep(k,K){//two before
+                dp[i][j][k]=(dp[i-1][j-1][k-1]);
+            }
+        }
+    }
 }
