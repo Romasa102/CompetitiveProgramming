@@ -11,7 +11,7 @@ int main(){
         ll N,M;
         cin >> N >> M;
         map<ll,vector<ll>> connection;
-        rep(i,M){
+        rep(j,M){
             ll a,b;
             cin >> a >> b;
             connection[a].push_back(b);
@@ -19,9 +19,6 @@ int main(){
         }
         queue<ll> Q;
         vector<vector<ll>> Connects(N+1);//connected to 1
-        rep(i,N+1){
-            Connects[i].push_back(i);
-        }
         repp(k,1,N+1){
             vector<bool> visited(N+1,false);
             Q.push(k);
@@ -30,29 +27,31 @@ int main(){
                 Connects[k].push_back(cur);
                 Q.pop();
                 visited[cur] = true;
-                for(ll i:connection[cur]){
-                    if(visited[i])continue;
-                    Q.push(i);
+                for(ll o:connection[cur]){
+                    if(visited[o])continue;
+                    Q.push(o);
                 }
             }
         }
-        for(ll i:Connects[N]){
-            cout << i << " & " << N << " PARTS OF THE LAST COMPONENT IS  " << endl;
+        rep(j,N+1){
+            sort(Connects[j].begin(),Connects[j].end());
         }
         repp(k,1,N+1){
-            for(ll i:Connects[k]){
+            for(ll j:Connects[k]){
                 ll a = (*lower_bound(Connects[1].begin(),Connects[1].end(),k)-k)*(*lower_bound(Connects[1].begin(),Connects[1].end(),k)-k);
-                ll b = (*(lower_bound(Connects[1].begin(),Connects[1].end(),k)-1)-k)*(*(lower_bound(Connects[1].begin(),Connects[1].end(),k)-1)-k);
+                ll b = 30000;
+                if(lower_bound(Connects[1].begin(),Connects[1].end(),k)!=Connects[1].begin()){
+                    b = (*(lower_bound(Connects[1].begin(),Connects[1].end(),k)-1)-k)*(*(lower_bound(Connects[1].begin(),Connects[1].end(),k)-1)-k);
+                }
                 ll c = 30000;
-                if(lower_bound(Connects[N].begin(),Connects[N].end(),i)!=Connects[N].end()){
-                    c = (*lower_bound(Connects[N].begin(),Connects[N].end(),i)-i)*(*lower_bound(Connects[N].begin(),Connects[N].end(),i)-i);
+                if(lower_bound(Connects[N].begin(),Connects[N].end(),j)!=Connects[N].end()){
+                    c = (*lower_bound(Connects[N].begin(),Connects[N].end(),j)-j)*(*lower_bound(Connects[N].begin(),Connects[N].end(),j)-j);
                 }
                 ll d = 30000;
-                if(lower_bound(Connects[N].begin(),Connects[N].end(),i)!=Connects[N].begin()){
-                    d=(*(lower_bound(Connects[N].begin(),Connects[N].end(),i)-1)-i)*(*(lower_bound(Connects[N].begin(),Connects[N].end(),i)-1)-i);
+                if(lower_bound(Connects[N].begin(),Connects[N].end(),j)!=Connects[N].begin()){
+                    d=(*(lower_bound(Connects[N].begin(),Connects[N].end(),j)-1)-j)*(*(lower_bound(Connects[N].begin(),Connects[N].end(),j)-1)-j);
                 }
                 ans = min(ans,min(a,b)+min(c,d));
-                cout << k << " " << i << "    min from 0 is " << min(a,b) << " min from the last is " << min(c,d) << endl;
             }
         }
         cout << ans << endl;
