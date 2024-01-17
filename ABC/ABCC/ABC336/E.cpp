@@ -6,5 +6,16 @@ using ll = long long;
 using P = pair<ll,ll>;
 int main(){
     ll N;cin>>N;
-
+    ll dp[126][126][126][126];//digits, sum of digits, mod base, reminder
+    rep(i,126){
+        rep(j,126){
+            rep(k,126){
+                rep(l,126){
+                    rep(o,9){
+                        dp[i][j][k][l] =
+                    }
+                }
+            }
+        }
+    }
 }
