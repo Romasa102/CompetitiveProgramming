@@ -5,8 +5,8 @@ using ll = long long;
 #define repp(i,o,n) for(ll i = o; i < (n); ++i)
 using P = pair<ll,ll>;
 int main(){
-    freopen("cowdance.in","r",stdin);
-    freopen("cowdance.out","w",stdout);
+    //freopen("cowdance.in","r",stdin);
+    //freopen("cowdance.out","w",stdout);
     ll N,T;cin >> N >> T;
     vector<ll>d(N);rep(i,N)cin >> d[i];
     ll left=0,right=1LL<<62;
