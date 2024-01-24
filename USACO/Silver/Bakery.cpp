@@ -13,14 +13,16 @@ int main(){
         ll left=0,right=C;
         ll ans = 0;
         while(right-left>1){
-            ll mid = (left+right)/2;//mid is the current C time value;
-            ll mMax = 1LL<<30;//possible maximum value for m
+            ll mid = (left+right)/2;//mid is the current time taken for C+M;
+            ll cMax = 1LL<<30;//possible maximum value for c
             rep(j,N){
-                mMax = min(mMax,(c[i] - a[i] * mid)/b[i]);
+                cMax = min(cMax,(c[i] - b[i] * mid)/(a[i]-b[i]));//a[i]*C + b[i]*(mid - C) < c[i]
+                //(a[i]-b[i])*C+b[i]*mid <= c[i]
             }
-            if(mMax > 0){//if it worked
+            ll mMax = mid - cMax;
+            if(cMax >= 0 && mMax >= 0 && mid >= cMax && mid >= mMax){//if it worked
                 left = mid;//increase the value to search
-                ans = max(ans,mid + mMax);
+                ans = max(ans,min(C,cMax) + min(M,mMax));
             }else{
                 right = mid;
             }
