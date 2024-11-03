@@ -4,28 +4,34 @@ using ll = long long;
 #define rep(i,n) for(ll i = 0; i < (n); ++i)
 #define repp(i,o,n) for(ll i = o; i < (n); ++i)
 using P = pair<ll,ll>;
-vector<P> finalRoute;
-void merge(ll a,ll b){
-
-}
 int main(){
-    ll N,K;//N = number of ppl wanna meat , K = number of warp that could be made
-    cin >> N >> K;
-    ll year[N];
-    rep(i,N)cin >> year[i];
-    map<ll,ll> grp;
+    ll N,K;cin >> N >> K;
+    ll anc[N];rep(i,N)cin >> anc[i];
+    priority_queue<ll,vector<ll>,greater<ll>>jump;
+    map<ll,ll> floor;
+    ll requiredJ = 0;
+    ll ans = 0;
     rep(i,N){
-        grp[(year[i]+11)/12]++;
+        floor[(anc[i]+11)/12]++;
     }
-    vector<pair<ll,P>> diff;
-    for(auto i = grp.begin(); i != grp.end(); i++){
-        finalRoute.push_back(*i->second,*i->second);
-        diff.push_back({(*(++i)->first)-(*i->first),{*i->second,*(++i)->second}});
+    if(floor.find(0)==floor.end()){
+        requiredJ++;
+        jump.push(12);
     }
-    sort(diff.begin(),diff.end());
-    rep(i,N){
-        finalRoute.erase(std::find(finalRoute.begin(), finalRoute.end(),diff[i].second.first));
-        finalRoute.erase(std::find(finalRoute.begin(), finalRoute.end(),diff[i].second.second));
-        finalRoute.push_back({diff[i].second.first,diff[i].second.second});
+    floor[0]++;
+    for(auto i = floor.begin(); i != floor.end(); i++){
+        auto nextI = i;++nextI;
+        if(nextI == floor.end())break;
+        if((nextI->first-i->first)!=1){
+            jump.push((nextI->first-i->first - 1) * 12);
+            requiredJ++;
+        }
+        ans+=12;
     }
+    rep(i,requiredJ-K){
+        cout << ans << endl;
+        ans+=jump.top();
+        jump.pop();
+    }
+    cout << ans << endl;
 }
