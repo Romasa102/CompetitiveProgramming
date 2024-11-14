@@ -5,13 +5,16 @@ using ll = long long;
 #define repp(i,o,n) for(ll i = o; i < (n); ++i)
 using P = pair<ll,ll>;
 int main(){
-    ll x;
-    cin >> x;
-    ll cash = x;
-    double ans = 1;
+    ll count[4];
+    rep(i,4)count[i]=0;
+    ll A[4];
     rep(i,4){
-        cash-=5;
-        ans *= ((double)cash/(double)x);
+        cin >> A[i];
+        count[A[i]-1]++;
+    }
+    ll ans = 0;
+    rep(i,4){
+        ans += (count[i]/2);
     }
     cout << ans << endl;
 }
