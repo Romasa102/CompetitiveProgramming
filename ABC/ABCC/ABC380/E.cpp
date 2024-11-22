@@ -5,9 +5,9 @@ using ll = long long;
 #define repp(i,o,n) for(ll i = o; i < (n); ++i)
 using P = pair<ll,ll>;
 using PP = pair<P,P>;
-vector<P> parents;
+vector<PP> parents;
 ll parent(ll a){
-    if(parents[a].first.f.0 == a)return a;
+    if(parents[a].first.first == a)return a;
     return parent(parents[a].first);
 }
 ll unite(ll a,ll b){
