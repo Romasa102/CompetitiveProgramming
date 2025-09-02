@@ -381,3 +381,5 @@ cmake-build-debug/CMakeFiles/TargetDirectories.txt
 cmake-build-debug/Testing/Temporary/LastTest.log
 *.log
 *.txt
+.vscode/settings.json
+.vscode/c_cpp_properties.json
