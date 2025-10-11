@@ -1,25 +1,31 @@
 {
-    "configurations": [
-        {
-            "name": "Mac",
-            "includePath": [
-                "${workspaceFolder}/**"
-            ],
-            "compilerPath": "/usr/bin/clang",
-            "cStandard": "c14",
-            "cppStandard": "c++14",
-            "intelliSenseMode": "clang-x64"
-        },
-        {
-            "name": "Win32",
-            "includePath": [
-                "${workspaceFolder}/**"
-            ],
-            "windowsSdkVersion": "10.0.22000.0",
-            "cStandard": "c17",
-            "cppStandard": "c++17",
-            "intelliSenseMode": "windows-gcc-x64"
-        }
-    ],
-    "version": 4
+  "configurations": [
+    {
+      "name": "linux-gcc-x64",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "/usr/include/c++/15.2.1",
+        "/usr/include/c++/15.2.1/x86_64-pc-linux-gnu",
+        "/usr/include",
+        "/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include"
+      ],
+      "forcedInclude": [ "/usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/stdc++.h" ],
+
+      "compilerPath": "/usr/bin/g++",
+      "cStandard": "c17",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "linux-gcc-x64"
+    },
+    {
+      "name": "Win32",
+      "includePath": [
+        "${workspaceFolder}/**"
+      ],
+      "windowsSdkVersion": "10.0.22000.0",
+      "cStandard": "c17",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "windows-gcc-x64"
+    }
+  ],
+  "version": 4
 }
