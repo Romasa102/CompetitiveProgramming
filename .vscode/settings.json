@@ -11,7 +11,11 @@
   "explorer.confirmDragAndDrop": false,
   "explorer.confirmDelete": false,
   "explorer.copyRelativePathSeparator": "/",
+<<<<<<< HEAD
   "files.autoSave": "off",
+=======
+  "files.autoSave": "afterDelay",
+>>>>>>> 73fceb8ae7b30f385416c25722714d05090f478e
   "files.associations": {
     ".clang*": "yaml",
     "*.hpp.in": "cpp",
