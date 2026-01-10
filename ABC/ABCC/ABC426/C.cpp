@@ -30,21 +30,22 @@ int main(){
     ll N,Q;
     cin >> N >> Q;
     ll X[Q],Y[Q];
-    deque<P> temp;
-    ll cur = 1;
+    ll ver[N];
+    rep(i,N)ver[i]=1;
+    ll cur = 0;
     rep(i,Q){
         cin >> X[i] >> Y[i];
         ll ans = 0;
-        if(cur <= X[i]){
-            ans+=(X[i]-cur+1);
-            cur = X[i]+1;
+        if(cur > X[i]-1){
+            cout << 0 << endl;
+            continue;
         }
-        while(!temp.empty() &&temp.front().first <= X[i]){
-            ans+=temp.front().second;
-            temp.pop_front();
+        while(cur <= X[i]-1){
+            ans+=ver[cur];
+            cur++;
         }
-        temp.push_back({Y[i],ans});
-        sort(temp.begin(),temp.end());
+        //sort(temp.begin(),temp.end());
         cout << ans << endl;
+        ver[Y[i]-1]+=ans;
     }
 }
