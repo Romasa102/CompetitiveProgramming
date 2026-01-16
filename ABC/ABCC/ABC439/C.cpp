@@ -29,28 +29,22 @@ using P = pair<ll,ll>;
 int main(){
     ll N;
     cin >> N;
-    ll A[N];
-    rep(i,N)cin >> A[i];
-    vector<P> sevenN;
-    vector<P> fiveN;
-    vector<P> threeN;
-    map<ll,P> divided;
-    rep(i,N){
-        if(A[i]%7 == 0){
-            sevenN.push_back({A[i]/7,i});
-            divided[A[i]/7]={i,7};
-        }
-        if(A[i]%5 == 0){
-            fiveN.push_back({A[i]/5,i});
-            divided[A[i]/5]={i,5};
-        }
-        if(A[i]%3 == 0){
-            threeN.push_back({A[i]/3,i});
-            divided[A[i]/3]={i,3};
+    unordered_map<ll,ll> num;
+    vector<ll> Ans;
+    repp(i,1,2237){
+        repp(j,i+1,3301){
+            if(i*i+j*j > N)break;
+            num[i*i+j*j]++;
         }
     }
-    for (auto it = divided.begin(); it != divided.end(); it++)
-    {
-        `
+    for(auto it = num.begin();it!=num.end();it++){
+        if(it->second == 1){
+            Ans.push_back(it->first);
+        }
     }
+    sort(Ans.begin(),Ans.end());
+    cout << Ans.size() << endl;
+    rep(i, Ans.size()){
+        cout << Ans[i] << " ";
+    }cout << endl;
 }

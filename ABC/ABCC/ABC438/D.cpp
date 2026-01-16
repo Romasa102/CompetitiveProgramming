@@ -41,9 +41,19 @@ int main(){
     repp(i,1,N+1)BSum[i] = BSum[i-1] + B[i-1];
     for(ll i = N-1;i>=0;i--)CSum[i] = CSum[i+1] + C[i];
     deque<P> BCSum(N);
-    rep(i,N){
-        BCSum[i] = {BSum[i] + CSum[i],i};
+    /*
+
+    rep(i,N)cout << BSum[i] << " ";
+    cout << endl;
+    rep(i,N)cout << CSum[i] << " ";
+    cout << endl;
+    
+    */
+    rep(i,N-1){
+        BCSum[i] = {BSum[i+1] + CSum[i+1],i};
+    //    cout << BCSum[i].first << "  ";
     }
+    //cout << endl;
     sort(BCSum.begin(),BCSum.end(),greater<P>());
     ll ASum = 0;
     map<ll,bool> visited;
@@ -53,9 +63,9 @@ int main(){
         BCurSum += B[i];
         visited[i] = true;
         if(!BCSum.empty()){
-            ans = max(ASum+BCSum[0].first-BCurSum,ans);
             while(!BCSum.empty()&&visited.find(BCSum[0].second) != visited.end())BCSum.pop_front();
-        }   
+            ans = max(ASum+BCSum[0].first-BCurSum,ans);
+        }
     }
     cout << ans << endl;
 }
