@@ -26,28 +26,20 @@ using namespace std;
 using ll = long long;
 #define rep(i,n) for(ll i = 0; i < (n); ++i)
 using P = pair<ll,ll>;
-int main() {
-    int N, K;
-    cin >> N >> K;
-    vector<int> A(N);
-    rep(i, N) cin >> A[i];
-    vector<bool> dp(K + 1, false);
-    repp(i, 1, K + 1) {
-        bool can_win = false;
-        rep(j, N) {
-            if (i-A[j]>=0) {
-                if (dp[i-A[j]]==false) {
-                    can_win = true;
-                    break;
-                }
+int main(){
+    ll t;
+    cin >> t;
+    rep(_,t){
+        ll n,k;
+        cin >> n >> k;
+        bool solved = false;
+        for(ll ct=0, l = n, r = n; l > 0; ct++,l/=2, r=(r+1)/2){
+            if(l <= k && k <= r){
+                cout << ct << endl;
+                solved = true;
+                break;
             }
         }
-        dp[i] = can_win;
+        if(!solved)cout << -1 << endl;
     }
-    if (dp[K]) {
-        cout << "First" << endl;
-    } else {
-        cout << "Second" << endl;
-    }
-    return 0;
 }
