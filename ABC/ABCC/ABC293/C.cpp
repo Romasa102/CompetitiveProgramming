@@ -22,36 +22,29 @@
 #include <utility>
 #include <vector>
 using namespace std;
+#define repp(i, c, n) for (ll i = c; i < (n); ++i)
 using ll = long long;
 #define rep(i,n) for(ll i = 0; i < (n); ++i)
 using P = pair<ll,ll>;
-ll N,D;
-bool Inf[100000];
-vector<P> pos(100000);
-void Infection(int O){
-    if(Inf[O]){
-        return;
+ll H,W;
+vector<vector<ll>> A;
+ll dfs(ll x,ll y,set<ll> path){
+    if(path.find(A[x][y])!=path.end())return 0;
+    if(x==(H-1) && y == (W-1))return 1;
+    auto pathC = path;
+    pathC.insert(A[x][y]);
+    ll ans = 0;
+    if(x+1<H){
+        ans+=dfs(x+1,y,pathC);
     }
-    Inf[O] = true;
-    rep(i,N){
-        if(sqrt(pow(pos[O].first - pos[i].first,2) + pow(pos[O].second - pos[i].second,2)) <= D){
-            Infection(i);
-        }
+    if(y+1<W){
+        ans+=dfs(x,y+1,pathC);
     }
-    return;
+    return ans;
 }
 int main(){
-    cin >> N >> D;
-    rep(i,N){
-        cin >> pos[i].first >> pos[i].second;
-    }
-    Infection(0);
-
-    rep(i,N){
-        if(Inf[i]){
-            cout << "Yes" << endl;
-        }else{
-            cout << "No" << endl;
-        }
-    }
+    cin >> H >> W;
+    A.resize(H,vector<ll>(W));
+    rep(i,H)rep(j,W)cin>>A[i][j];
+    cout <<  dfs(0,0,set<ll>()) << endl;
 }
