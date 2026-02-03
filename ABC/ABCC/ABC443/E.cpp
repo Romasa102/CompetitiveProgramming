@@ -34,46 +34,39 @@ int main(){
         cin >> N >> C;
         string S[N];
         rep(i,N)cin >> S[i];
-        vector<queue<ll>> destroyable(N);
-        rep(i,N){
-            for(ll j = N-1;j>=0;j--){
+        vector<vector<bool>> canGo(N,vector<bool>(N,false));
+        vector<ll> fstWall(N,-1);
+        for(ll i= N-1;i>=0;i--){
+            rep(j,N){
                 if(S[i][j]=='#'){
-                    destroyable[j].push(i);
+                    fstWall[j] = max(fstWall[j],i);
                 }
             }
         }
-        P init = {N-1,C-1};
-        queue<P> q;
-        q.push(init);
-        vector<bool> ans(N,false);
-
-        vector<vector<bool>> visited(N,vector<bool>(N,false));
-        
-        while(!q.empty()){
-            P cur = q.front();q.pop();
-            ll x = cur.first;ll y=cur.second;
-            if(x==0){
-                ans[y]=true;
-                continue;
-            }
-            ll dys[] = {-1, 0, 1};
-            for(ll dy : dys) {
-                ll nx = x - 1;
-                ll ny = y + dy;
-                if(ny >= 0 && ny < N) {
-                    bool is_wall = (S[nx][ny] == '#');
-                    if (!is_wall ||(!destroyable[ny].empty()&&destroyable[ny].front()==(nx))) {
-                        q.push({nx, ny});
-                        destroyable[ny].pop();
+        canGo[N-1][C-1]=true;
+        for(ll i= N-2;i>=0;i--){
+            rep(j,N){
+                bool a=false;
+                bool b=false;
+                bool c=false;
+                if((j-1)>=0)a=canGo[i+1][j-1];
+                b = canGo[i+1][j];
+                if((j+1)<N)c=canGo[i+1][j+1];
+                if(S[i][j]=='.')canGo[i][j]=(a||b||c);
+                if(fstWall[j]==i && (a||b||c)==true && S[i][j]=='#'){
+                    for(ll k = i;k>=0;k--){
+                        canGo[k][j]=true;
                     }
                 }
             }
         }
+       // rep(i,N){
+       //     rep(j,N){
+       //         cout << canGo[i][j];
+       //     }cout << endl;
+        //}
         rep(i,N){
-            rep(j,N)cout << visited[i][j];
-            cout << endl;
-        }
-        rep(i,N)cout << ans[i];
-        cout << endl;
+            cout << canGo[0][i];
+        }cout << endl;
     }
 }
