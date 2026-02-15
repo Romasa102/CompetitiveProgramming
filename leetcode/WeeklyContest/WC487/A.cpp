@@ -37,4 +37,4 @@ public:
         unsigned max = (1u << bit_width((unsigned)n)) - 1;
         return max;
     }
-}
+};
