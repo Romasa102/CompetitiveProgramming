@@ -27,14 +27,21 @@ using ll = long long;
 #define rep(i,n) for(ll i = 0; i < (n); ++i)
 using P = pair<ll,ll>;
 int main(){
-    ll n;
-    cin >> n;
-    cout << countMonobit(n) << endl;
-}
-class Solution {
-public:
-    int countMonobit(int n) {
-        unsigned max = (1u << bit_width((unsigned)n)) - 1;
-        return max;
+    ll t;
+    cin >> t;
+    while(t--){
+        ll n;
+        cin >> n;
+        ll a[n];
+        bool exist = false;
+        rep(i,n){
+            cin >> a[i];
+            if(a[i]==67)exist=true;
+        }
+        if(exist){
+            cout << "Yes" << endl;
+        }else{
+            cout << "No" << endl;
+        }
     }
-};
+}
