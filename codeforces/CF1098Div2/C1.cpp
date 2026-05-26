@@ -26,51 +26,64 @@ using namespace std;
 using ll = long long;
 #define rep(i,n) for(ll i = 0; i < (n); ++i)
 using P = pair<ll,ll>;
-ll quick_pow10(int n)
-{
-    static ll pow10[19] = {
-        1, 10, 100, 1000, 10000, 
-        100000, 1000000, 10000000, 100000000, 
-        1000000000, //10
-        10000000000, 
-        100000000000, 
-        1000000000000,
-        10000000000000,
-        100000000000000,
-        1000000000000000,
-        10000000000000000,
-        100000000000000000,
-        1000000000000000000,
-    };
-
-    return pow10[n]; 
-}
 int main(){
     ll t;
     cin >> t;
+    ll P10[19];
+    P10[0] = 1;
+    for (int i = 1; i < 19; i++) P10[i] = P10[i-1] * 10;
     rep(_,t){
         ll a,n;
         cin >> a >> n;
-        ll d[2];
-        cin >> d[0] >> d[1];
-        ll len = (a == 0) ? 1 : (ll)to_string(a).size();
-        ll digitsOp1 = max(1LL, len - 1);
-        ll digitsOp2 = min(18LL, len + 1);
+        ll d[n];
+        rep(i,n)cin >> d[i];
+        ll digLen = to_string(a).length();
+        ll UB = 0;
+        ll LB = 0;
+        rep(j,digLen+1){
+            UB += P10[j] * min(d[0],d[1]);
+        }
+        
+        rep(j,digLen-1){
+            LB += P10[j] * max(d[0],d[1]);
+        }
+        
+        ll minDiff = min(abs(UB-a),abs(LB-a));
+        cout << LB << " " << UB << endl;
+        LB = 0;
+        UB = 0;
+        if(d[0]>d[1])swap(d[0],d[1]);
+        string s = to_string(a);
+        for(ll i = digLen-1; i>= 0; i--){
+            if((s[i]-'0')== d[0]){
+                LB += P10[i] * d[0];
+            }else if((s[i]-'0')==d[1]){
+                UB += P10[i] * d[1];
+            }else{
+                if(d[0] >= (s[i]-'0')){
+                    for(ll j = i; j>= 0; j--){
+                        LB += P10[j] * d[0];
+                        UB += P10[j] * d[0];
+                    }
+                    break;
+                }else if(d[1]>=(s[i]-'0')){
+                    LB += d[0] * P10[i];
+                    UB += d[1] * P10[i];
 
-        ll ans = 1LL<<60;
-        for(ll digits = digitsOp1; digits <= digitsOp2; digits++){
-            for(ll s = 0; s < (1LL << digits); s++){
-                ll sum = 0;
-                for(ll i = 0; i < digits; i++){
-                    if((s >> i) & 1){
-                        sum += d[0] * quick_pow10(i);
-                    }else{
-                        sum += d[1] * quick_pow10(i);
+                    for(ll j = i-1; j>= 0; j--){
+                        LB += P10[j] * d[1];
+                        UB += P10[j] * d[0];
+                    }
+                }else{
+                    for(ll j = i; j>= 0; j--){
+                        LB += P10[j] * d[1];
+                        UB += P10[j] * d[1];
                     }
                 }
-                ans = min(ans,llabs(a-sum));
+                break;
             }
         }
-        cout << ans <<endl;
+        minDiff = min({minDiff,abs(a-UB),abs(a-LB)});
+        cout << minDiff << "\n";
     }
 }
