@@ -27,11 +27,18 @@ using ll = long long;
 #define rep(i,n) for(ll i = 0; i < (n); ++i)
 using P = pair<ll,ll>;
 int main(){
-    ll M,A,B;
-    cin >> M >> A >> B;
-    rep(i,M) {
-        rep(j,M){
-            while()
+    ll Q;
+    cin >> Q;
+    multiset<ll> trees;
+    rep(i,Q){
+        ll task,h;
+        cin >> task >> h;
+        if(task == 1){
+            trees.insert(h);
+            cout << trees.size() << endl;
+        }else{
+            trees.erase(trees.begin(),trees.upper_bound(h));
+            cout << trees.size() << endl;
         }
     }
 }
