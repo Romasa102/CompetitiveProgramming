@@ -27,11 +27,19 @@ using ll = long long;
 #define rep(i,n) for(ll i = 0; i < (n); ++i)
 using P = pair<ll,ll>;
 int main(){
-    ll M,A,B;
-    cin >> M >> A >> B;
-    rep(i,M) {
-        rep(j,M){
-            while()
+    ll N,L,R;
+    cin >> N >> L >> R;
+    string S;
+    cin >> S;
+    vector<vector<ll>> chars(26,vector<ll>());
+    rep(i,N){
+        chars[S[i]-'a'].push_back(i);
+    }
+    ll ans = 0;
+    rep(i,26){
+        rep(j,chars[i].size()){
+            ans += (upper_bound(chars[i].begin(),chars[i].end(),chars[i][j]+R) - lower_bound(chars[i].begin(),chars[i].end(),chars[i][j]+L));
         }
     }
+    cout << ans << endl;
 }

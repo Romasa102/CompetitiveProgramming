@@ -26,12 +26,22 @@ using namespace std;
 using ll = long long;
 #define rep(i,n) for(ll i = 0; i < (n); ++i)
 using P = pair<ll,ll>;
+ll gcd(ll a,ll b){
+    if(a==0)return b;
+    if(b==0)return a;
+    if(a>b)swap(a,b);
+    return gcd(a,b%a);
+}
 int main(){
-    ll M,A,B;
-    cin >> M >> A >> B;
-    rep(i,M) {
-        rep(j,M){
-            while()
-        }
+    ll A,B;
+    cin >> A >> B;
+    ll gcdv = gcd(A,B);
+    ll aside = A/gcdv;
+    ll bside = B/gcdv;
+    //to check overflow do the division w the max.
+    if(gcdv * aside > 1000000000000000000/bside){
+        cout << "Large" << endl;
+        return 0;
     }
+    cout << gcdv * aside * bside << endl;
 }
