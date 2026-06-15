@@ -26,34 +26,13 @@ using namespace std;
 using ll = long long;
 #define rep(i,n) for(ll i = 0; i < (n); ++i)
 using P = pair<ll,ll>;
-
-const ll MOD = 998244353;
 int main(){
-    string S;
-    cin >> S;
-    ll cur = 1;
-    vector<ll> dp(S.size(),1);
-    ll fnA=0;
-    ll fnB=0;
-    ll fnC=0;
-    ll ans = 0;
-    rep(i,S.size()){
-        if(S[i]=='a'){
-            dp[i]+=fnB+fnC;
-            fnA+=dp[i];
-        }else if(S[i]=='b'){
-            dp[i]+=fnA+fnC;
-            fnB+=dp[i];
-        }else if(S[i]=='c'){
-            dp[i]+=fnB+fnA;
-            fnC+=dp[i];
-        }
-        fnA %=MOD;
-        fnB%=MOD;
-        fnC%=MOD;
-        dp[i]%=MOD;
-        ans+=dp[i];
-        ans%=MOD;
+    ll t;cin>>t;
+    rep(_,t){
+        ll n;
+        cin >> n;
+        ll a[n];
+        rep(i,n)cin >> a[i];
+        
     }
-    cout << ans << endl;
 }

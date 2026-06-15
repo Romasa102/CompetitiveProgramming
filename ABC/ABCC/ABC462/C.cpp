@@ -26,34 +26,22 @@ using namespace std;
 using ll = long long;
 #define rep(i,n) for(ll i = 0; i < (n); ++i)
 using P = pair<ll,ll>;
-
-const ll MOD = 998244353;
 int main(){
-    string S;
-    cin >> S;
-    ll cur = 1;
-    vector<ll> dp(S.size(),1);
-    ll fnA=0;
-    ll fnB=0;
-    ll fnC=0;
-    ll ans = 0;
-    rep(i,S.size()){
-        if(S[i]=='a'){
-            dp[i]+=fnB+fnC;
-            fnA+=dp[i];
-        }else if(S[i]=='b'){
-            dp[i]+=fnA+fnC;
-            fnB+=dp[i];
-        }else if(S[i]=='c'){
-            dp[i]+=fnB+fnA;
-            fnC+=dp[i];
+    ll N;
+    cin >> N;
+    P XY[N];
+    rep(i,N)cin >> XY[i].first >> XY[i].second;
+    sort(XY,XY+N);
+    vector<bool> itsok(N,true);
+    ll minY = 1LL<<50;
+    rep(i,N){
+        if(XY[i].second > minY){
+            itsok[i] = false;
+        }else{
+            minY = XY[i].second;
         }
-        fnA %=MOD;
-        fnB%=MOD;
-        fnC%=MOD;
-        dp[i]%=MOD;
-        ans+=dp[i];
-        ans%=MOD;
     }
-    cout << ans << endl;
+    ll count = 0;
+    rep(i,N)if(itsok[i])count++;
+    cout << count << endl;
 }

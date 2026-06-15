@@ -27,33 +27,36 @@ using ll = long long;
 #define rep(i,n) for(ll i = 0; i < (n); ++i)
 using P = pair<ll,ll>;
 
-const ll MOD = 998244353;
-int main(){
-    string S;
-    cin >> S;
-    ll cur = 1;
-    vector<ll> dp(S.size(),1);
-    ll fnA=0;
-    ll fnB=0;
-    ll fnC=0;
-    ll ans = 0;
-    rep(i,S.size()){
-        if(S[i]=='a'){
-            dp[i]+=fnB+fnC;
-            fnA+=dp[i];
-        }else if(S[i]=='b'){
-            dp[i]+=fnA+fnC;
-            fnB+=dp[i];
-        }else if(S[i]=='c'){
-            dp[i]+=fnB+fnA;
-            fnC+=dp[i];
-        }
-        fnA %=MOD;
-        fnB%=MOD;
-        fnC%=MOD;
-        dp[i]%=MOD;
-        ans+=dp[i];
-        ans%=MOD;
+ll bigC(ll n, ll k) {
+    if (k > n) {
+        return 0;
     }
+    ll r = 1;
+    for (ll d = 1; d <= k; ++d) {
+        r *= n--;
+        r /= d;
+    }
+    return r;
+}
+
+int main(){
+    ll N,D;
+    cin >> N >> D;
+    ll S[N],T[N];
+    vector<ll> cumS(1100000,0);
+    rep(i,N){
+        cin >> S[i] >> T[i];
+        T[i] -= D;
+        if(S[i] <= T[i]){
+            cumS[S[i]]++;
+            cumS[T[i]+1]--;
+        }
+    }
+    ll cur = 0;
+    ll ans = 0;
+    rep(i,1010000){
+        cur+=cumS[i];
+        ans += bigC(cur,2);
+    }cout << endl;
     cout << ans << endl;
 }
