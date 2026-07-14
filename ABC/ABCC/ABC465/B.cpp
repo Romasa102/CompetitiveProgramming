@@ -27,11 +27,22 @@ using ll = long long;
 #define rep(i,n) for(ll i = 0; i < (n); ++i)
 using P = pair<ll,ll>;
 int main(){
-    ll A,B;
-    cin >> A >> B;
-    if(A * 3 > B*2){
-        cout << "Yes" << endl;
-    }else{
-        cout << "No" << endl;
+    ll X,Y,L,R,A,B;
+    cin >> X >> Y >> L >> R >> A >> B;
+    vector<ll> cost(24);
+    rep(i,24){
+        if(i < L || (R-1) < i){
+            cost[i] = Y;
+        }else{
+            cost[i] = X;
+        }
     }
+    ll ans = 0;
+    repp(i,1,24){
+        //cout << cost[i] << " ";
+    }//cout << endl;
+    repp(i,A,B){
+        ans += cost[i];
+    }
+    cout << ans << endl;
 }

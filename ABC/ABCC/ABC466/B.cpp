@@ -27,11 +27,18 @@ using ll = long long;
 #define rep(i,n) for(ll i = 0; i < (n); ++i)
 using P = pair<ll,ll>;
 int main(){
-    ll A,B;
-    cin >> A >> B;
-    if(A * 3 > B*2){
-        cout << "Yes" << endl;
-    }else{
-        cout << "No" << endl;
+    ll N,M;
+    cin >> N >> M;
+    ll C[N],S[N];
+    map<ll,ll> mp;
+    rep(i,M){
+        mp[i] = -1;
     }
+    rep(i,N){
+        cin >> C[i] >> S[i];
+        mp[C[i]-1] = max(mp[C[i]-1],S[i]);
+    }
+    rep(i,M){
+        cout << mp[i] << " ";
+    }cout << endl;
 }

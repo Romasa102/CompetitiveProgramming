@@ -27,11 +27,7 @@ using ll = long long;
 #define rep(i,n) for(ll i = 0; i < (n); ++i)
 using P = pair<ll,ll>;
 int main(){
-    ll A,B;
-    cin >> A >> B;
-    if(A * 3 > B*2){
-        cout << "Yes" << endl;
-    }else{
-        cout << "No" << endl;
-    }
+    string N;
+    cin >> N;
+    ll dp[3][2][1<<10] //mod3, include3, type of number included
 }
