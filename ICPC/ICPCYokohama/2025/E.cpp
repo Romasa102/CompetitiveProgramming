@@ -57,8 +57,8 @@ int main(){
                 ll cur = q.front();
                 q.pop();
                 for(auto j : mp[cur]){
-                    if(dist[j] != MAX){
-                        dist[j] = dist[i]+1;
+                    if(dist[j] == MAX){
+                        dist[j] = dist[cur]+1;
                         q.push(j);
                     }
                 }
@@ -67,6 +67,7 @@ int main(){
             rep(j,n){
                 distP.push_back({dist[j],j});
             }
+            sort(distP.begin(),distP.end());
             dists.push_back(distP);
         }
 
@@ -75,14 +76,22 @@ int main(){
         ll time = 0;
         set<ll> visited;
         visited.insert(0);
+        vector<ll> ans;
         bool work = true;
         rep(i,vec.size()){
-            ll tiemLimit = vec[i].first - time;
+            ll timeLimit = vec[i].first - time;
             ll nodeo = vec[i].second.first;
             ll nodet = vec[i].second.second;
             ll minimumTimeTake = 1LL<<50;
+            ll beg;
+            ll dest = nodeo;
+            if(visited.find(nodeo) != visited.end() && visited.find(nodet) != visited.end())continue;;
             for(auto j:dists[nodeo]){
                 if(visited.find(j.second) != visited.end()){
+                    if(j.first < minimumTimeTake){
+                        beg = j.second;
+                        dest = nodet;
+                    }
                     minimumTimeTake = min(j.first,minimumTimeTake);
                     break;
                 }
@@ -90,19 +99,50 @@ int main(){
 
             for(auto j:dists[nodet]){
                 if(visited.find(j.second) != visited.end()){
+                    if(j.first < minimumTimeTake){
+                        beg = j.second;
+                        dest = nodeo;
+                    }
                     minimumTimeTake = min(j.first,minimumTimeTake);
                     break;
                 }
             }
-            if(minimumTimeTake > tiemLimit){
+            queue<ll> q;
+            vector<ll> dist(n,MAX);
+            dist[beg] = 0;
+            q.push(beg);
+            vector<ll> par(n);
+            par[beg] = -1;
+            while(!q.empty()){
+                ll cur = q.front();
+                q.pop();
+                for(auto j : mp[cur]){
+                    if(dist[j] == MAX){
+                        par[j] = cur;
+                        dist[j] = dist[cur]+1;
+                        q.push(j);
+                    }
+                }
+            }
+            vector<ll> path;
+            for(ll v = dest; v != -1; v = par[v]) path.push_back(v);
+            reverse(path.begin(),path.end());
+            for(auto k : path){
+                if(visited.find(k) == visited.end()){
+                    visited.insert(k);
+                    ans.push_back(k);
+                }
+            }
+            if(minimumTimeTake > timeLimit){
                 work = false;
             }
+            time += dist[dest];
         }
         if(work){
             cout << "yes" << endl;
-            repp(i,1,vec.size()){
-                cout << vec[i].second.second+1;
-            }
+            rep(i,vec.size()){
+                cout << ans[i]+1 << " ";
+            }cout << endl;
         }else{
             cout << "no" << endl;
         }
