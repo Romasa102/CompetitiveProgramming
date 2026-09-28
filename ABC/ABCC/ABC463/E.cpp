@@ -30,37 +30,39 @@ int main(){
     ll N,M,Y;
     cin >> N >> M >> Y;
     map<ll,vector<P>> mp;
-    vector<ll> dist(N,-1);
+    vector<ll> dist(1000002,1LL<<50);
     rep(i,M){
         ll u,v,t;
-        cin >> u >> v >> t;
-        mp[u-1].push_back({v-1,t});
-        mp[v-1].push_back({u-1,t});
+        cin >>  u >> v >> t;
+        u--;v--;
+        mp[u].push_back({v,t});
+        mp[v].push_back({u,t});
     }
-    P X[N];
+    ll X[N];
+    rep(i,N)cin >> X[i];
+    mp[1000000].push_back({1000001,Y});
     rep(i,N){
-        cin >> X[i].first;
-        X[i].second = i;
+        mp[i].push_back({1000000,X[i]});
+        mp[1000001].push_back({i,X[i]});
     }
-    priority_queue<P> pq;//weight, dest;
-    pq.push({0,0});
+    priority_queue<P,vector<P>,greater<P>> pq;
+    pq.push({0,0}); //cost,dest
+    dist[0] = 0;
     while(!pq.empty()){
         P cur = pq.top();pq.pop();
-        ll curDist = cur.first;
-        dist[cur.second] = curDist;
-
-        for(auto i : mp[cur.second]){
-            if(dist[i.second]==-1){
-                pq.push({i.second + curDist,i.first});
-            }
-        }
-        rep(i,N){
-            if(dist[i]==-1){
-                pq.push({X[i].first + X[cur.second].first + Y,i});
-            }
+        ll curC = cur.first;
+        ll curI = cur.second;
+        if(curC > dist[curI])continue;
+        for(auto i : mp[curI]){
+            if(dist[i.first]<curC+i.second)continue;
+            dist[i.first] = curC + i.second;
+            pq.push({curC + i.second, i.first});
         }
     }
-    rep(i,N){
+    repp(i,1,N){
         cout << dist[i] << " ";
     }cout << endl;
 }
+//yummy
+//wanya chan tensai
+//nom

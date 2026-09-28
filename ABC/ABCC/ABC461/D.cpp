@@ -49,29 +49,33 @@ int main(){
         repp(m,i+1,H+1){
             ll right = 0;
             rep(left,W+1){
-                if (right < left) right = left;
                 while(right<W+1){
                     ll curS = (totalSum[m][right] - totalSum[i][right] - totalSum[m][left] + totalSum[i][left]);
                     if(curS<=K){
                         right++;
                     }else if(curS>K)break;
                 }
-                ans+=right-left;
+                ans+=right-left-1;
+                if (right == left) right++;
             }
 
 
             right = 0;
             rep(left,W+1){
-                if (right < left) right = left;
                 while(right<W+1){
                     ll curS = (totalSum[m][right] - totalSum[i][right] - totalSum[m][left] + totalSum[i][left]);
                     if(curS<=K-1){
                         right++;
                     }else if(curS>(K-1))break;
                 }
-                ans2+=right-left;
+                ans2+=right-left-1;
+                if (right == left) right++;
             }
         }
     }
-    cout << ans - ans2<< endl;
+    if(K==0){
+        cout << ans<< endl;
+    }else{
+        cout << ans - ans2<< endl;
+    }
 }
