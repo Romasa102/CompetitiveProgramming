@@ -1,0 +1,45 @@
+#include <cassert>
+#include <cctype>
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <bitset>
+#include <deque>
+#include <functional>
+#include <iostream>
+#include <iomanip>
+#include <limits>
+#include <list>
+#include <map>
+#include <numeric>
+#include <queue>
+#include <set>
+#include <sstream>
+#include <stack>
+#include <string>
+#include <tuple>
+#include <utility>
+#include <vector>
+using namespace std;
+#define repp(i, c, n) for (ll i = c; i < (n); ++i)
+using ll = long long;
+#define rep(i,n) for(ll i = 0; i < (n); ++i)
+using P = pair<ll,ll>;
+int main(){
+    ll n;
+    cin >> n;
+    vector<ll> f(n);
+    rep(i,n)cin >> f[i];
+
+    sort(f.begin(),f.end(),greater<ll>());
+    ll ans = 0;
+    ll target = n/3; // number of midean.
+    rep(i,n){
+        if(i%2 == 1 && target > 0){
+            ans += f[i];
+            target--;
+        }
+    }
+    cout << ans << endl;
+}
