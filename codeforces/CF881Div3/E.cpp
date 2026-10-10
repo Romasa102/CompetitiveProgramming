@@ -63,15 +63,16 @@ int main(){
             cin >> x[i];
             x[i]--;
         }
-        ll left = 0;
+        ll left = -1;
         ll right = q;
         ll ans = -2;
         while(right - left > 1){ // left include, right not include.
-            ll mid = (left + right)/2;
+            ll mid = (left + right+1)/2;
             bool condition = false;
             BIT bitT(n);
             rep(i,mid+1){
                 bitT.add(x[i],1);
+                //cout << "added to: " << x[i] << endl;
                 //add to segment tree
             }
             rep(i,m){
@@ -83,10 +84,10 @@ int main(){
                 //check each range with segment tree range sum query
             }
             if(condition){
-                left = mid;
-                ans = left;
-            }else{
                 right = mid;
+                ans = right;
+            }else{
+                left = mid;
             }
         }
         cout << ans + 1 << endl;

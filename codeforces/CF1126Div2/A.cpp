@@ -27,26 +27,20 @@ using ll = long long;
 #define rep(i,n) for(ll i = 0; i < (n); ++i)
 using P = pair<ll,ll>;
 int main(){
-    ll N,K;
-    cin >> N >> K;
-    ll A[N];
-    ll B[N];
-    rep(i,N){
-        cin >> A[i];
-        B[i] = A[i];
-    }
-    sort(B,B+N);
-    ll beg=N,en=0;
-    rep(i,N){
-        if(A[i]!=B[i]){
-            beg = min(beg,i);
-            en = max(en,i);
+    ll t;
+    cin >> t;
+    rep(_,t){
+        ll a,b;
+        cin >> a >> b;
+        if(a<b-1){
+            cout << -1 << endl;
+            continue;
+        }else{
+            if(a%2 == b%2){
+                cout << a << endl;
+            }else{
+                cout << a + 1 << endl;
+            }
         }
-    }
-    if(en==0 || 
-    (en - beg) < K){
-        cout << "Yes" << endl;
-    }else{
-        cout << "No" << endl;
     }
 }
