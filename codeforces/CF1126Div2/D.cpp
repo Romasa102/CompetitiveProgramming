@@ -39,48 +39,65 @@ int main(){
         vector<ll> a;
         vector<ll> L(n),R(n);
         vector<P> LR;
-        vector<ll> startPos;
+        set<ll> startPos;
         rep(i,n){
             cin >> L[i] >> R[i];
+            L[i]--;R[i]--;
             LR.push_back({L[i],R[i]});
-            startPos.push_back(L[i]);
-            startPos.push_back(R[i]-m+1);
+            startPos.insert(L[i]);
+            startPos.insert(R[i]+1);
+            startPos.insert(max(0LL,R[i]-m+1));
+            startPos.insert(max(0LL,L[i]-m));
             a.push_back(L[i]);
             a.push_back(R[i]);
         }
+        startPos.insert(0);
         vector<ll> xs = a;                       // copy of values to compress
         sort(xs.begin(),xs.end());
         sort(LR.begin(),LR.end());
-        sort(startPos.begin(),startPos.end());
         xs.erase(unique(xs.begin(),xs.end()), xs.end());
         auto id = [&](int x) { return int(lower_bound(xs.begin(),xs.end(), x) - xs.begin()); };
         
-        ll cur = 0;
         ll curS = 0;
         ll ans = -1;
-        ll dest = cur+m-1;
+        ll dest = m-1;
         bool haedDecreasing = false;
         bool tailIncreasing = false;
-        P target = {cur,0};
+        P target = {0,1LL<<60};
 
         auto lri = upper_bound(LR.begin(), LR.end(), target);
         if (lri != LR.begin()) {
             --lri;
-            if (lri->first <= cur && cur <= lri->second) haedDecreasing = true;
+            if (lri->first <= 0 && 0 <= lri->second) haedDecreasing = true;
         }
-        target = {dest,0};
+        target = {dest,1LL<<60};
         lri = upper_bound(LR.begin(),LR.end(),target);
-        
-        if (lri != LR.begin()) {
-            --lri;
-        }
-        for(auto it = LR.begin(); it != lri; it++){
+        for(auto it = LR.begin(); it != (lri); it++){
             if((*it).second <= dest){
                 curS += (*it).second - (*it).first + 1;
             }else{
-                curS += (dest - (*it).first);
+                curS += (dest - (*it).first+ 1);
                 tailIncreasing = true;
             }
+        }
+
+        P tg = {m,1LL<<60};
+        auto q = upper_bound(LR.begin(),LR.end(),tg);
+        if (q != LR.begin()) {
+            --q;
+            if (q->first <= m && m <= q->second) tailIncreasing = true;
+        }
+
+
+        //cout << "lri is " << (*lri).first << endl;
+        for(auto it = LR.begin(); it != (lri); it++){
+            if((*it).second <= dest){
+                curS += (*it).second - (*it).first + 1;
+            }else{
+                curS += (dest - (*it).first+ 1);
+                tailIncreasing = true;
+            }
+            //cout << "curS initialization at : " << curS << endl;
         }
         ll state = 0; //if increase : 1, neutral : 0, decrease : -1;
         if(haedDecreasing && !tailIncreasing){
@@ -88,23 +105,26 @@ int main(){
         }else if(!haedDecreasing && tailIncreasing){
             state = 1;
         }
-        ll lb = curS + state * (startPos[1]-startPos[0]);
+        ll lb = curS + state * (*(++startPos.begin())-*(startPos.begin()));
         if(is_between(k,min(curS,lb),max(curS,lb))){
-            ans = startPos[cur] + abs(k - curS);
+            ans =* (startPos.begin()) + abs(k - curS);
         }
         curS = lb;
-        rep(i,startPos.size()){
-            if(startPos[i]==0)continue;
-            cur = startPos[i];
-            dest = cur+m;
+        for(auto it = startPos.begin(); it != startPos.end(); it++){
+
+            haedDecreasing = false;
+            tailIncreasing = false;
+            auto i = (*it);
+            if(i==0)continue;
+            dest = i+m;
             
-            target = {cur,0};
+            target = {i,1LL<<60};
             lri = upper_bound(LR.begin(),LR.end(),target);
             if (lri != LR.begin()) {
                 --lri;
             }
-            if((*lri).first <= cur && cur <= (*lri).second)haedDecreasing=true;
-            target = {dest,0};
+            if((*lri).first <= i && i <= (*lri).second)haedDecreasing=true;
+            target = {dest,1LL<<60};
             lri = upper_bound(LR.begin(),LR.end(),target);
             if (lri != LR.begin()) {
                 --lri;
@@ -116,12 +136,17 @@ int main(){
             }else if(!haedDecreasing && tailIncreasing){
                 state = 1;
             }
-            ll lb = curS + state * (startPos[1]-startPos[0]);
+            auto nextIt = std::next(it);
+            if (nextIt == startPos.end()) break;
+            ll lb = curS + state * (*nextIt - i);
+
+            //cout << "currently at " << i << "curS is : " << curS << " where its state is " << state << " and the reach is : " << lb << endl;
             if(is_between(k,min(curS,lb),max(curS,lb))){
-                ans = startPos[cur] + abs(k - curS);
+                ans = i + abs(k - curS);
+                //cout << "Passed at pos : " << i << "; with ans: " << ans << endl; 
             }
             curS = lb;
         }
-        cout << ans << endl;
+        cout << (ans == -1 ? -1 : ans + 1) << endl;
     }
 }
