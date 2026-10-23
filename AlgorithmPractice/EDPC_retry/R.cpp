@@ -9,5 +9,5 @@ int main(){
     cin >> N >> K;
     ll a[N][N];
     rep(i,N)rep(j,N)cin >> a[i][j];
-     
+    
 }
